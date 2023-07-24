@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chunlei.bili.video.dao.TagDao">
+    <select id="getTagsByCatId" resultType="com.chunlei.bili.video.model.Tag">
+        select t.*
+        from tag t
+        left join category_tag_relation ctr using (tag_id)
+        left join category c on c.cat_id = ctr.catelog_id
+        where c.cat_id = #{catId}
+    </select>
+</mapper>

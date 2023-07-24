@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chunlei.bili.video.mapper.VideoMapper">
+  <resultMap id="BaseResultMap" type="com.chunlei.bili.video.model.Video">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="video_title" jdbcType="VARCHAR" property="videoTitle" />
+    <result column="video_description" jdbcType="VARCHAR" property="videoDescription" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="catalog_id" jdbcType="BIGINT" property="catalogId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="schedule" jdbcType="INTEGER" property="schedule" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+    <result column="publish_status" jdbcType="TINYINT" property="publishStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="duration" jdbcType="BIGINT" property="duration" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, member_id, video_title, video_description, img_url, catalog_id, type, schedule, 
+    weight, publish_status, create_time, update_time, duration
+  </sql>
+  <select id="selectByExample" parameterType="com.chunlei.bili.video.model.VideoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from video
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from video
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chunlei.bili.video.model.VideoExample">
+    delete from video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chunlei.bili.video.model.Video">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into video (member_id, video_title, video_description, 
+      img_url, catalog_id, type, 
+      schedule, weight, publish_status, 
+      create_time, update_time, duration
+      )
+    values (#{memberId,jdbcType=BIGINT}, #{videoTitle,jdbcType=VARCHAR}, #{videoDescription,jdbcType=VARCHAR}, 
+      #{imgUrl,jdbcType=VARCHAR}, #{catalogId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{schedule,jdbcType=INTEGER}, #{weight,jdbcType=DECIMAL}, #{publishStatus,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{duration,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chunlei.bili.video.model.Video">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into video
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="videoTitle != null">
+        video_title,
+      </if>
+      <if test="videoDescription != null">
+        video_description,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="catalogId != null">
+        catalog_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="schedule != null">
+        schedule,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="publishStatus != null">
+        publish_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="videoTitle != null">
+        #{videoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="videoDescription != null">
+        #{videoDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogId != null">
+        #{catalogId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="schedule != null">
+        #{schedule,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="publishStatus != null">
+        #{publishStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chunlei.bili.video.model.VideoExample" resultType="java.lang.Long">
+    select count(*) from video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update video
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.memberId != null">
+        member_id = #{row.memberId,jdbcType=BIGINT},
+      </if>
+      <if test="row.videoTitle != null">
+        video_title = #{row.videoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="row.videoDescription != null">
+        video_description = #{row.videoDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="row.imgUrl != null">
+        img_url = #{row.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="row.catalogId != null">
+        catalog_id = #{row.catalogId,jdbcType=BIGINT},
+      </if>
+      <if test="row.type != null">
+        type = #{row.type,jdbcType=INTEGER},
+      </if>
+      <if test="row.schedule != null">
+        schedule = #{row.schedule,jdbcType=INTEGER},
+      </if>
+      <if test="row.weight != null">
+        weight = #{row.weight,jdbcType=DECIMAL},
+      </if>
+      <if test="row.publishStatus != null">
+        publish_status = #{row.publishStatus,jdbcType=TINYINT},
+      </if>
+      <if test="row.createTime != null">
+        create_time = #{row.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updateTime != null">
+        update_time = #{row.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.duration != null">
+        duration = #{row.duration,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update video
+    set id = #{row.id,jdbcType=BIGINT},
+      member_id = #{row.memberId,jdbcType=BIGINT},
+      video_title = #{row.videoTitle,jdbcType=VARCHAR},
+      video_description = #{row.videoDescription,jdbcType=VARCHAR},
+      img_url = #{row.imgUrl,jdbcType=VARCHAR},
+      catalog_id = #{row.catalogId,jdbcType=BIGINT},
+      type = #{row.type,jdbcType=INTEGER},
+      schedule = #{row.schedule,jdbcType=INTEGER},
+      weight = #{row.weight,jdbcType=DECIMAL},
+      publish_status = #{row.publishStatus,jdbcType=TINYINT},
+      create_time = #{row.createTime,jdbcType=TIMESTAMP},
+      update_time = #{row.updateTime,jdbcType=TIMESTAMP},
+      duration = #{row.duration,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chunlei.bili.video.model.Video">
+    update video
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="videoTitle != null">
+        video_title = #{videoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="videoDescription != null">
+        video_description = #{videoDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogId != null">
+        catalog_id = #{catalogId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="schedule != null">
+        schedule = #{schedule,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="publishStatus != null">
+        publish_status = #{publishStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.video.model.Video">
+    update video
+    set member_id = #{memberId,jdbcType=BIGINT},
+      video_title = #{videoTitle,jdbcType=VARCHAR},
+      video_description = #{videoDescription,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      catalog_id = #{catalogId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      schedule = #{schedule,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DECIMAL},
+      publish_status = #{publishStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      duration = #{duration,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chunlei.bili.video.dao.VideoTagRelationDao">
+    <insert id="saveBatch" parameterType="java.util.List">
+        insert into video_tag_relation (tag_id, video_id, tag_name)
+        values 
+            <foreach collection="list" separator="," item="item" index="index">
+            (#{item.tagId}, #{item.videoId},#{item.tagName})
+            </foreach>
+    </insert>
+</mapper>

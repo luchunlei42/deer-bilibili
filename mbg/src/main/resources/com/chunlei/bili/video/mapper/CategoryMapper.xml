@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chunlei.bili.video.mapper.CategoryMapper">
+  <resultMap id="BaseResultMap" type="com.chunlei.bili.video.model.Category">
+    <id column="cat_id" jdbcType="BIGINT" property="catId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="code" jdbcType="CHAR" property="code" />
+    <result column="parent_cid" jdbcType="BIGINT" property="parentCid" />
+    <result column="cat_level" jdbcType="INTEGER" property="catLevel" />
+    <result column="show_status" jdbcType="TINYINT" property="showStatus" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="icon" jdbcType="CHAR" property="icon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cat_id, name, code, parent_cid, cat_level, show_status, sort, icon
+  </sql>
+  <select id="selectByExample" parameterType="com.chunlei.bili.video.model.CategoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from category
+    where cat_id = #{catId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from category
+    where cat_id = #{catId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chunlei.bili.video.model.CategoryExample">
+    delete from category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chunlei.bili.video.model.Category">
+    insert into category (cat_id, name, code, parent_cid, 
+      cat_level, show_status, sort, 
+      icon)
+    values (#{catId,jdbcType=BIGINT}, #{name,jdbcType=CHAR}, #{code,jdbcType=CHAR}, #{parentCid,jdbcType=BIGINT}, 
+      #{catLevel,jdbcType=INTEGER}, #{showStatus,jdbcType=TINYINT}, #{sort,jdbcType=INTEGER}, 
+      #{icon,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chunlei.bili.video.model.Category">
+    insert into category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="catId != null">
+        cat_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="parentCid != null">
+        parent_cid,
+      </if>
+      <if test="catLevel != null">
+        cat_level,
+      </if>
+      <if test="showStatus != null">
+        show_status,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="catId != null">
+        #{catId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=CHAR},
+      </if>
+      <if test="parentCid != null">
+        #{parentCid,jdbcType=BIGINT},
+      </if>
+      <if test="catLevel != null">
+        #{catLevel,jdbcType=INTEGER},
+      </if>
+      <if test="showStatus != null">
+        #{showStatus,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chunlei.bili.video.model.CategoryExample" resultType="java.lang.Long">
+    select count(*) from category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update category
+    <set>
+      <if test="row.catId != null">
+        cat_id = #{row.catId,jdbcType=BIGINT},
+      </if>
+      <if test="row.name != null">
+        name = #{row.name,jdbcType=CHAR},
+      </if>
+      <if test="row.code != null">
+        code = #{row.code,jdbcType=CHAR},
+      </if>
+      <if test="row.parentCid != null">
+        parent_cid = #{row.parentCid,jdbcType=BIGINT},
+      </if>
+      <if test="row.catLevel != null">
+        cat_level = #{row.catLevel,jdbcType=INTEGER},
+      </if>
+      <if test="row.showStatus != null">
+        show_status = #{row.showStatus,jdbcType=TINYINT},
+      </if>
+      <if test="row.sort != null">
+        sort = #{row.sort,jdbcType=INTEGER},
+      </if>
+      <if test="row.icon != null">
+        icon = #{row.icon,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update category
+    set cat_id = #{row.catId,jdbcType=BIGINT},
+      name = #{row.name,jdbcType=CHAR},
+      code = #{row.code,jdbcType=CHAR},
+      parent_cid = #{row.parentCid,jdbcType=BIGINT},
+      cat_level = #{row.catLevel,jdbcType=INTEGER},
+      show_status = #{row.showStatus,jdbcType=TINYINT},
+      sort = #{row.sort,jdbcType=INTEGER},
+      icon = #{row.icon,jdbcType=CHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chunlei.bili.video.model.Category">
+    update category
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=CHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=CHAR},
+      </if>
+      <if test="parentCid != null">
+        parent_cid = #{parentCid,jdbcType=BIGINT},
+      </if>
+      <if test="catLevel != null">
+        cat_level = #{catLevel,jdbcType=INTEGER},
+      </if>
+      <if test="showStatus != null">
+        show_status = #{showStatus,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=CHAR},
+      </if>
+    </set>
+    where cat_id = #{catId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.video.model.Category">
+    update category
+    set name = #{name,jdbcType=CHAR},
+      code = #{code,jdbcType=CHAR},
+      parent_cid = #{parentCid,jdbcType=BIGINT},
+      cat_level = #{catLevel,jdbcType=INTEGER},
+      show_status = #{showStatus,jdbcType=TINYINT},
+      sort = #{sort,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=CHAR}
+    where cat_id = #{catId,jdbcType=BIGINT}
+  </update>
+</mapper>
