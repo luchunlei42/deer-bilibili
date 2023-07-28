@@ -20,7 +20,6 @@ public class SubmissionDTO {
     @NotNull
     private String location;
 
-    @NotNull
     private Long memberId;
 
     @NotNull
@@ -38,7 +37,7 @@ public class SubmissionDTO {
     private Integer type;
 
     @NotNull
-    private Integer schedule;
+    private Integer scheduled;
 
     private List<Long> tagIdList;
 

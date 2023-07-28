@@ -20,10 +20,14 @@ spring:
           uri: lb://bili-video
           predicates:
             - Path=/apix/video/**
-        - id: video-route
+        - id: auth-route
           uri: lb://bili-auth
           predicates:
             - Path=/apix/auth/**
+        - id: search-route
+          uri: lb://bili-search
+          predicates:
+            - Path=/apix/search/**
   application:
     name: bili-gateway
 server:

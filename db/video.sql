@@ -22,7 +22,7 @@ create table video
    img_url              varchar(255) comment '封面地址',
    catalog_id           bigint comment '分区',
    type                 int comment  '自制/转载',
-   schedule             int comment '是否定时发布',
+   scheduled             int comment '是否定时发布',
    weight               decimal(18,4),
    publish_status       tinyint comment '上架状态[0 - 下架，1 - 上架]',
    create_time          datetime,
@@ -136,7 +136,7 @@ insert into category (name,code,parent_cid,cat_level,show_status) values( '短�
 insert into category (name,code,parent_cid,cat_level,show_status) values( '手办·模玩','garage_kit',1,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '特摄','tokusatsu',1,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '动漫杂谈','acgntalks',1,2,1);
-insert into category (name,code,parent_cid,cat_level,show_status) values( '综合','other',1,2,1);
+insert into category (name,code,parent_cid,cat_level,show_status) values( '动画综合','other',1,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '资讯','information',2,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '官方延伸','offical',2,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '完结动画','finish',2,2,1);
@@ -215,7 +215,7 @@ insert into category (name,code,parent_cid,cat_level,show_status) values( '热�
 insert into category (name,code,parent_cid,cat_level,show_status) values( '环球','global',14,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '社会','social',14,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '综合','multiple',14,2,1);
-insert into category (name,code,parent_cid,cat_level,show_status) values( '综艺','variety',15,2,1);
+insert into category (name,code,parent_cid,cat_level,show_status) values( '资讯综艺','variety',15,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '娱乐杂谈','talker',15,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '粉丝创作','fans',15,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '明星综合','celebrity',15,2,1);
@@ -244,10 +244,10 @@ insert into category (name,code,parent_cid,cat_level,show_status) values( '计�
 insert into category (name,code,parent_cid,cat_level,show_status) values( '科工机械 ','industry',21,2,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '极客DIY','diy',21,2,1);
 
-INSERT INTO `bili_videodb`.`tag` (`name`, `descript`, `show_status`, `first_letter`, `sort`) VALUES ('王者荣耀', '王者荣耀是一款..', '1', 'w', '1');
-INSERT INTO `bili_videodb`.`tag` (`name`, `descript`, `show_status`, `first_letter`, `sort`) VALUES ('MOBA', 'MOBA 即 Multiplayer Online Battle Arena：多人在线战斗竞技场游戏', '1', 'm', '2');
-INSERT INTO `bili_videodb`.`tag` (`name`, `descript`, `show_status`, `first_letter`, `sort`) VALUES ('电子竞技', '电子竞技也被称为电竞或eSports，是一种电子游戏的竞技活动，玩家在这里与其他人或团队对 …', '1', 'd', '3');
+-- INSERT INTO `bili_videodb`.`tag` (`name`, `descript`, `show_status`, `first_letter`, `sort`) VALUES ('王者荣耀', '王者荣耀是一款..', '1', 'w', '1');
+-- INSERT INTO `bili_videodb`.`tag` (`name`, `descript`, `show_status`, `first_letter`, `sort`) VALUES ('MOBA', 'MOBA 即 Multiplayer Online Battle Arena：多人在线战斗竞技场游戏', '1', 'm', '2');
+-- INSERT INTO `bili_videodb`.`tag` (`name`, `descript`, `show_status`, `first_letter`, `sort`) VALUES ('电子竞技', '电子竞技也被称为电竞或eSports，是一种电子游戏的竞技活动，玩家在这里与其他人或团队对 …', '1', 'd', '3');
 
-INSERT INTO `bili_videodb`.`category_tag_relation` (`tag_id`, `catelog_id`, `tag_name`, `catelog_name`) VALUES ('1', '49', '王者荣耀', '手机游戏');
-INSERT INTO `bili_videodb`.`category_tag_relation` (`tag_id`, `catelog_id`, `tag_name`, `catelog_name`) VALUES ('2', '49', 'MOBA', '手机游戏');
-INSERT INTO `bili_videodb`.`category_tag_relation` (`tag_id`, `catelog_id`, `tag_name`, `catelog_name`) VALUES ('3', '49', '电子竞技', '手机游戏');
+-- INSERT INTO `bili_videodb`.`category_tag_relation` (`tag_id`, `catelog_id`, `tag_name`, `catelog_name`) VALUES ('1', '49', '王者荣耀', '手机游戏');
+-- INSERT INTO `bili_videodb`.`category_tag_relation` (`tag_id`, `catelog_id`, `tag_name`, `catelog_name`) VALUES ('2', '49', 'MOBA', '手机游戏');
+-- INSERT INTO `bili_videodb`.`category_tag_relation` (`tag_id`, `catelog_id`, `tag_name`, `catelog_name`) VALUES ('3', '49', '电子竞技', '手机游戏');

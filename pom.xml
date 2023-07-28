@@ -13,6 +13,7 @@
     <module>bili-gateway</module>
       <module>mbg</module>
       <module>bili-auth</module>
+      <module>bili-search</module>
   </modules>
 
   <parent>

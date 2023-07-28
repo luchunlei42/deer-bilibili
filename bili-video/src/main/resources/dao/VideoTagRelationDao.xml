@@ -8,4 +8,10 @@
             (#{item.tagId}, #{item.videoId},#{item.tagName})
             </foreach>
     </insert>
+    <select id="findTagsByVideoId" resultType="java.lang.String">
+        select t.name
+        from tag t
+                 left join video_tag_relation vtr using(tag_id)
+        where vtr.video_id = #{videoId}
+    </select>
 </mapper>

@@ -9,7 +9,7 @@
     <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
     <result column="catalog_id" jdbcType="BIGINT" property="catalogId" />
     <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="schedule" jdbcType="INTEGER" property="schedule" />
+    <result column="scheduled" jdbcType="INTEGER" property="scheduled" />
     <result column="weight" jdbcType="DECIMAL" property="weight" />
     <result column="publish_status" jdbcType="TINYINT" property="publishStatus" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -75,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_id, video_title, video_description, img_url, catalog_id, type, schedule, 
+    id, member_id, video_title, video_description, img_url, catalog_id, type, scheduled, 
     weight, publish_status, create_time, update_time, duration
   </sql>
   <select id="selectByExample" parameterType="com.chunlei.bili.video.model.VideoExample" resultMap="BaseResultMap">
@@ -114,12 +114,12 @@
     </selectKey>
     insert into video (member_id, video_title, video_description, 
       img_url, catalog_id, type, 
-      schedule, weight, publish_status, 
+      scheduled, weight, publish_status, 
       create_time, update_time, duration
       )
     values (#{memberId,jdbcType=BIGINT}, #{videoTitle,jdbcType=VARCHAR}, #{videoDescription,jdbcType=VARCHAR}, 
       #{imgUrl,jdbcType=VARCHAR}, #{catalogId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
-      #{schedule,jdbcType=INTEGER}, #{weight,jdbcType=DECIMAL}, #{publishStatus,jdbcType=TINYINT}, 
+      #{scheduled,jdbcType=INTEGER}, #{weight,jdbcType=DECIMAL}, #{publishStatus,jdbcType=TINYINT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{duration,jdbcType=BIGINT}
       )
   </insert>
@@ -147,8 +147,8 @@
       <if test="type != null">
         type,
       </if>
-      <if test="schedule != null">
-        schedule,
+      <if test="scheduled != null">
+        scheduled,
       </if>
       <if test="weight != null">
         weight,
@@ -185,8 +185,8 @@
       <if test="type != null">
         #{type,jdbcType=INTEGER},
       </if>
-      <if test="schedule != null">
-        #{schedule,jdbcType=INTEGER},
+      <if test="scheduled != null">
+        #{scheduled,jdbcType=INTEGER},
       </if>
       <if test="weight != null">
         #{weight,jdbcType=DECIMAL},
@@ -235,8 +235,8 @@
       <if test="row.type != null">
         type = #{row.type,jdbcType=INTEGER},
       </if>
-      <if test="row.schedule != null">
-        schedule = #{row.schedule,jdbcType=INTEGER},
+      <if test="row.scheduled != null">
+        scheduled = #{row.scheduled,jdbcType=INTEGER},
       </if>
       <if test="row.weight != null">
         weight = #{row.weight,jdbcType=DECIMAL},
@@ -267,7 +267,7 @@
       img_url = #{row.imgUrl,jdbcType=VARCHAR},
       catalog_id = #{row.catalogId,jdbcType=BIGINT},
       type = #{row.type,jdbcType=INTEGER},
-      schedule = #{row.schedule,jdbcType=INTEGER},
+      scheduled = #{row.scheduled,jdbcType=INTEGER},
       weight = #{row.weight,jdbcType=DECIMAL},
       publish_status = #{row.publishStatus,jdbcType=TINYINT},
       create_time = #{row.createTime,jdbcType=TIMESTAMP},
@@ -298,8 +298,8 @@
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="schedule != null">
-        schedule = #{schedule,jdbcType=INTEGER},
+      <if test="scheduled != null">
+        scheduled = #{scheduled,jdbcType=INTEGER},
       </if>
       <if test="weight != null">
         weight = #{weight,jdbcType=DECIMAL},
@@ -327,7 +327,7 @@
       img_url = #{imgUrl,jdbcType=VARCHAR},
       catalog_id = #{catalogId,jdbcType=BIGINT},
       type = #{type,jdbcType=INTEGER},
-      schedule = #{schedule,jdbcType=INTEGER},
+      scheduled = #{scheduled,jdbcType=INTEGER},
       weight = #{weight,jdbcType=DECIMAL},
       publish_status = #{publishStatus,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},

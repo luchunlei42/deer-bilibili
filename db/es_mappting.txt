@@ -1,0 +1,88 @@
+PUT /video
+{
+  "mappings": {
+    "properties": {
+      "vid": {
+        "type": "keyword"
+      },
+      "member": {
+        "type": "nested",
+        "properties": {
+          "author": {
+            "type": "text",
+            "analyzer": "ik_smart",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "mid": {
+            "type": "keyword"
+          },
+          "avatar": {
+            "type": "keyword"
+          },
+          "sign": {
+            "type": "keyword"
+          },
+          "level": {
+            "type": "integer"
+          },
+          "fans": {
+            "type": "long"
+          },
+          "video": {
+            "type": "long"
+          }
+        }
+      },
+      "typeid": {
+        "type": "keyword"
+      },
+      "typename":{
+        "type": "keyword"
+      },
+      "videourl":{
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "ik_smart"
+      },
+      "description": {
+        "type": "text",
+        "analyzer": "ik_smart"
+      },
+      "pic": {
+        "type": "keyword"
+      },
+      "play": {
+        "type": "long"
+      },
+      "video_review": {
+        "type": "long"
+      },
+      "favorites": {
+        "type": "long"
+      },
+      "tag": {
+        "type": "keyword"
+      },
+      "review": {
+        "type": "long"
+      },
+      "pubdate": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+      },
+      "senddate": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+      },
+      "duration": {
+        "type": "keyword"
+      }
+    }
+  }
+}

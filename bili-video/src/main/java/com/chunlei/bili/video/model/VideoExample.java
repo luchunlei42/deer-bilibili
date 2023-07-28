@@ -556,63 +556,63 @@ public class VideoExample {
             return (Criteria) this;
         }
 
-        public Criteria andScheduleIsNull() {
-            addCriterion("schedule is null");
+        public Criteria andScheduledIsNull() {
+            addCriterion("scheduled is null");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleIsNotNull() {
-            addCriterion("schedule is not null");
+        public Criteria andScheduledIsNotNull() {
+            addCriterion("scheduled is not null");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleEqualTo(Integer value) {
-            addCriterion("schedule =", value, "schedule");
+        public Criteria andScheduledEqualTo(Integer value) {
+            addCriterion("scheduled =", value, "scheduled");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleNotEqualTo(Integer value) {
-            addCriterion("schedule <>", value, "schedule");
+        public Criteria andScheduledNotEqualTo(Integer value) {
+            addCriterion("scheduled <>", value, "scheduled");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleGreaterThan(Integer value) {
-            addCriterion("schedule >", value, "schedule");
+        public Criteria andScheduledGreaterThan(Integer value) {
+            addCriterion("scheduled >", value, "scheduled");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleGreaterThanOrEqualTo(Integer value) {
-            addCriterion("schedule >=", value, "schedule");
+        public Criteria andScheduledGreaterThanOrEqualTo(Integer value) {
+            addCriterion("scheduled >=", value, "scheduled");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleLessThan(Integer value) {
-            addCriterion("schedule <", value, "schedule");
+        public Criteria andScheduledLessThan(Integer value) {
+            addCriterion("scheduled <", value, "scheduled");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleLessThanOrEqualTo(Integer value) {
-            addCriterion("schedule <=", value, "schedule");
+        public Criteria andScheduledLessThanOrEqualTo(Integer value) {
+            addCriterion("scheduled <=", value, "scheduled");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleIn(List<Integer> values) {
-            addCriterion("schedule in", values, "schedule");
+        public Criteria andScheduledIn(List<Integer> values) {
+            addCriterion("scheduled in", values, "scheduled");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleNotIn(List<Integer> values) {
-            addCriterion("schedule not in", values, "schedule");
+        public Criteria andScheduledNotIn(List<Integer> values) {
+            addCriterion("scheduled not in", values, "scheduled");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleBetween(Integer value1, Integer value2) {
-            addCriterion("schedule between", value1, value2, "schedule");
+        public Criteria andScheduledBetween(Integer value1, Integer value2) {
+            addCriterion("scheduled between", value1, value2, "scheduled");
             return (Criteria) this;
         }
 
-        public Criteria andScheduleNotBetween(Integer value1, Integer value2) {
-            addCriterion("schedule not between", value1, value2, "schedule");
+        public Criteria andScheduledNotBetween(Integer value1, Integer value2) {
+            addCriterion("scheduled not between", value1, value2, "scheduled");
             return (Criteria) this;
         }
 

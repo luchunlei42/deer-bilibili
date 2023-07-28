@@ -25,6 +25,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor())
                 .addPathPatterns("/mino/**")
-                .addPathPatterns("/");
+                .addPathPatterns("/upload/frame");
     }
 }

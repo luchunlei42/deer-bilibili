@@ -6,6 +6,7 @@ import com.chunlei.bili.video.vo.SubmissionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -16,17 +17,33 @@ public class VideoController {
     @Autowired
     VideoService videoService;
 
+    /**
+     * 投稿
+     * @param dto
+     * @return
+     */
     @PostMapping("/upload/frame")
     public R uploadVideo(@Valid @RequestBody SubmissionDTO dto){
         try {
             videoService.uploadVideo(dto);
         } catch (ExecutionException e) {
-            return R.failed();
+            e.printStackTrace();
+            return R.failed(e.getMessage());
         } catch (InterruptedException e) {
-            return R.failed();
-        } catch (RuntimeException e){
-            return R.failed();
+            return R.failed(e.getMessage());
         }
         return R.success(null);
     }
+
+    /**
+     * 发布
+     * @param videoId
+     * @return
+     */
+    @PostMapping("/publish")
+    public R publishVideo(@RequestParam Long videoId){
+        return videoService.publish(videoId);
+    }
+
+
 }

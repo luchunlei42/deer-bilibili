@@ -88,6 +88,12 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public Member findMemberById(Long memberId) {
+
+        return memberMapper.selectByPrimaryKey(memberId);
+    }
+
     public Member loadUserByUsername(String username){
         MemberExample example = new MemberExample();
         example.createCriteria().andMobileEqualTo(username);

@@ -2,6 +2,7 @@
   <configuration default="false" name="bilibili" type="CompoundRunConfigurationType">
     <toRun name="BiliAuthApplication" type="SpringBootApplicationConfigurationType" />
     <toRun name="BiliGatewayApplication" type="SpringBootApplicationConfigurationType" />
+    <toRun name="BiliSearchApplication" type="SpringBootApplicationConfigurationType" />
     <toRun name="BiliVideoApplication" type="SpringBootApplicationConfigurationType" />
     <method v="2" />
   </configuration>

@@ -19,7 +19,7 @@ public class Video implements Serializable {
 
     private Integer type;
 
-    private Integer schedule;
+    private Integer scheduled;
 
     private BigDecimal weight;
 
@@ -89,12 +89,12 @@ public class Video implements Serializable {
         this.type = type;
     }
 
-    public Integer getSchedule() {
-        return schedule;
+    public Integer getScheduled() {
+        return scheduled;
     }
 
-    public void setSchedule(Integer schedule) {
-        this.schedule = schedule;
+    public void setScheduled(Integer scheduled) {
+        this.scheduled = scheduled;
     }
 
     public BigDecimal getWeight() {
@@ -150,7 +150,7 @@ public class Video implements Serializable {
         sb.append(", imgUrl=").append(imgUrl);
         sb.append(", catalogId=").append(catalogId);
         sb.append(", type=").append(type);
-        sb.append(", schedule=").append(schedule);
+        sb.append(", scheduled=").append(scheduled);
         sb.append(", weight=").append(weight);
         sb.append(", publishStatus=").append(publishStatus);
         sb.append(", createTime=").append(createTime);
