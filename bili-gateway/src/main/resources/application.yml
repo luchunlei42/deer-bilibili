@@ -28,6 +28,10 @@ spring:
           uri: lb://bili-search
           predicates:
             - Path=/apix/search/**
+        - id: member-route
+          uri: lb://bili-member
+          predicates:
+            - Path=/apix/member/**
   application:
     name: bili-gateway
 server:

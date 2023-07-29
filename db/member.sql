@@ -50,7 +50,7 @@ alter table growth_change_history comment '成长值变化历史记录';
 /*==============================================================*/
 create table member_level
 (
-   id                   bigint not null auto_increment comment 'id',
+   id                   bigint not null comment 'id',
    name                 varchar(100) comment '等级名称',
    growth_point         int comment '等级需要的成长值',
    default_status       tinyint comment '是否为默认等级[0->不是；1->是]',
@@ -76,3 +76,43 @@ create table member_statistics_info
 );
 
 alter table member_statistics_info comment '会员统计信息';
+
+-- ----------------------------
+-- Table structure for t_user_following
+-- ----------------------------
+DROP TABLE IF EXISTS `member_following`;
+CREATE TABLE `member_following` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `member_id` bigint DEFAULT NULL COMMENT '用户id',
+  `following_id` bigint DEFAULT NULL COMMENT '关注用户id',
+  `group_id` bigint DEFAULT NULL COMMENT '关注分组id',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户关注表';
+
+-- ----------------------------
+-- Table structure for t_following_group
+-- ----------------------------
+DROP TABLE IF EXISTS `following_group`;
+CREATE TABLE `following_group` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `member_id` bigint DEFAULT NULL COMMENT '用户id',
+  `name` varchar(50) DEFAULT NULL COMMENT '关注分组名称',
+  `type` varchar(5) DEFAULT NULL COMMENT '关注分组类型：0特别关注  1悄悄关注 2默认分组  3用户自定义分组',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户关注分组表';
+
+
+insert into member_level (id,name,growth_point,default_status,note) values
+(0,'Lv0',0,1,"解锁滚动弹幕 视频投稿"),
+(1,'Lv1',0,1,"解锁滚动弹幕 视频投稿"),
+(2,'Lv2',200,0,"解锁高级弹幕 视频评论 彩色弹幕"),
+(3,'Lv3',1500,0,"解锁顶部/底部弹幕 视频添加tag"),
+(4,'Lv4',4500,0,"解锁视频删除标签"),
+(5,'Lv5',10800,0,"可购买邀请码1个/月"),
+(6,'Lv6',28800,0,"可购买邀请码2个/月");
+
+insert into following_group (name,type) values ('特别关注',0),('悄悄关注',1),('默认分组',2);
+

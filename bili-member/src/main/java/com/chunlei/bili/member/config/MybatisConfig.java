@@ -1,9 +1,9 @@
-package com.chunlei.bili.auth.config;
+package com.chunlei.bili.member.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan({"com.chunlei.bili.member.mapper"})
+@MapperScan({"com.chunlei.bili.member.mapper","com.chunlei.bili.member.dao"})
 public class MybatisConfig {
 }

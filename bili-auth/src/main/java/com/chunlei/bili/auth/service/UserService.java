@@ -1,8 +1,8 @@
 package com.chunlei.bili.auth.service;
 
 import com.chunlei.bili.auth.dto.LoginFormDTO;
-import com.chunlei.bili.auth.model.Member;
 import com.chunlei.bili.common.api.R;
+import com.chunlei.bili.member.model.Member;
 
 import javax.servlet.http.HttpSession;
 

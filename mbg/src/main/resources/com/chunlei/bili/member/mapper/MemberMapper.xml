@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chunlei.bili.member.mapper.MemberMapper">
+  <resultMap id="BaseResultMap" type="com.chunlei.bili.member.model.Member">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="level_id" jdbcType="BIGINT" property="levelId" />
+    <result column="username" jdbcType="CHAR" property="username" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="birth" jdbcType="DATE" property="birth" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="sign" jdbcType="VARCHAR" property="sign" />
+    <result column="growth" jdbcType="INTEGER" property="growth" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, level_id, username, nickname, password, mobile, email, avatar, gender, birth, 
+    city, sign, growth, status, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.chunlei.bili.member.model.MemberExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from member
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chunlei.bili.member.model.MemberExample">
+    delete from member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chunlei.bili.member.model.Member">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into member (level_id, username, nickname, 
+      password, mobile, email, 
+      avatar, gender, birth, 
+      city, sign, growth, 
+      status, create_time)
+    values (#{levelId,jdbcType=BIGINT}, #{username,jdbcType=CHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{birth,jdbcType=DATE}, 
+      #{city,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{growth,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chunlei.bili.member.model.Member">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="levelId != null">
+        level_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="birth != null">
+        birth,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="sign != null">
+        sign,
+      </if>
+      <if test="growth != null">
+        growth,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="levelId != null">
+        #{levelId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=CHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=DATE},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null">
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="growth != null">
+        #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chunlei.bili.member.model.MemberExample" resultType="java.lang.Long">
+    select count(*) from member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update member
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.levelId != null">
+        level_id = #{row.levelId,jdbcType=BIGINT},
+      </if>
+      <if test="row.username != null">
+        username = #{row.username,jdbcType=CHAR},
+      </if>
+      <if test="row.nickname != null">
+        nickname = #{row.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.password != null">
+        password = #{row.password,jdbcType=VARCHAR},
+      </if>
+      <if test="row.mobile != null">
+        mobile = #{row.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="row.email != null">
+        email = #{row.email,jdbcType=VARCHAR},
+      </if>
+      <if test="row.avatar != null">
+        avatar = #{row.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="row.gender != null">
+        gender = #{row.gender,jdbcType=TINYINT},
+      </if>
+      <if test="row.birth != null">
+        birth = #{row.birth,jdbcType=DATE},
+      </if>
+      <if test="row.city != null">
+        city = #{row.city,jdbcType=VARCHAR},
+      </if>
+      <if test="row.sign != null">
+        sign = #{row.sign,jdbcType=VARCHAR},
+      </if>
+      <if test="row.growth != null">
+        growth = #{row.growth,jdbcType=INTEGER},
+      </if>
+      <if test="row.status != null">
+        status = #{row.status,jdbcType=TINYINT},
+      </if>
+      <if test="row.createTime != null">
+        create_time = #{row.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update member
+    set id = #{row.id,jdbcType=BIGINT},
+      level_id = #{row.levelId,jdbcType=BIGINT},
+      username = #{row.username,jdbcType=CHAR},
+      nickname = #{row.nickname,jdbcType=VARCHAR},
+      password = #{row.password,jdbcType=VARCHAR},
+      mobile = #{row.mobile,jdbcType=VARCHAR},
+      email = #{row.email,jdbcType=VARCHAR},
+      avatar = #{row.avatar,jdbcType=VARCHAR},
+      gender = #{row.gender,jdbcType=TINYINT},
+      birth = #{row.birth,jdbcType=DATE},
+      city = #{row.city,jdbcType=VARCHAR},
+      sign = #{row.sign,jdbcType=VARCHAR},
+      growth = #{row.growth,jdbcType=INTEGER},
+      status = #{row.status,jdbcType=TINYINT},
+      create_time = #{row.createTime,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chunlei.bili.member.model.Member">
+    update member
+    <set>
+      <if test="levelId != null">
+        level_id = #{levelId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=CHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=DATE},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null">
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="growth != null">
+        growth = #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.member.model.Member">
+    update member
+    set level_id = #{levelId,jdbcType=BIGINT},
+      username = #{username,jdbcType=CHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      birth = #{birth,jdbcType=DATE},
+      city = #{city,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      growth = #{growth,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
