@@ -15,6 +15,7 @@
       <module>bili-auth</module>
       <module>bili-search</module>
       <module>bili-member</module>
+    <module>bili-moment</module>
   </modules>
 
   <parent>

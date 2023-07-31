@@ -1,9 +1,6 @@
-package com.chunlei.bili.member.DTO;
+package com.chunlei.bili.moment.dto;
 
 import lombok.Data;
-
-import java.util.Date;
-import java.util.List;
 
 @Data
 public class FollowingDTO {

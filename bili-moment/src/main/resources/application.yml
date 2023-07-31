@@ -9,9 +9,17 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
   application:
-    name: bili-member
+    name: bili-moment
   redis:
     host: 192.168.56.42
+  kafka:
+    bootstrap-servers: 192.168.56.42:9092
+    producer:
+      retries: 3
+    consumer:
+      group-id: moment-timeline-service
+      auto-offset-reset: earliest
+      enable-auto-commit: false
 
 mybatis:
   configuration:
@@ -22,6 +30,6 @@ mybatis:
 server:
   port: 8082
   servlet:
-    context-path: /apix/member
+    context-path: /apix/moment
 push-pull-point:
   1000000

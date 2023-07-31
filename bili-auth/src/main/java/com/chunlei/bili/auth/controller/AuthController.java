@@ -43,8 +43,7 @@ public class AuthController {
     }
 
     @GetMapping("/info")
-    public R me(Principal principal){
-        // TODO 获取当前登录的用户并返回
+    public R me(){
         return R.success(UserHolder.getUser());
     }
 

@@ -1,4 +1,4 @@
-package com.chunlei.bili.member.DTO;
+package com.chunlei.bili.member.dto;
 
 import lombok.Data;
 

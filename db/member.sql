@@ -116,3 +116,4 @@ insert into member_level (id,name,growth_point,default_status,note) values
 
 insert into following_group (name,type) values ('特别关注',0),('悄悄关注',1),('默认分组',2);
 
+

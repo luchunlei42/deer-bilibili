@@ -1,9 +1,11 @@
 package com.chunlei.bili.member.service.Impl;
 
+import com.alibaba.fastjson.JSON;
 import com.chunlei.bili.common.api.R;
+import com.chunlei.bili.common.utils.RedisConstants;
 import com.chunlei.bili.common.utils.UserHolder;
-import com.chunlei.bili.member.DTO.FollowingDTO;
-import com.chunlei.bili.member.DTO.FollowingGroupDTO;
+import com.chunlei.bili.member.dto.FollowingDTO;
+import com.chunlei.bili.member.dto.FollowingGroupDTO;
 import com.chunlei.bili.member.constant.FollowingGroupType;
 import com.chunlei.bili.member.dao.FollowingDao;
 import com.chunlei.bili.member.mapper.MemberFollowingMapper;
@@ -13,6 +15,8 @@ import com.chunlei.bili.member.service.FollowingGroupService;
 import com.chunlei.bili.member.service.FollowingService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +38,10 @@ public class FollowingServiceImpl implements FollowingService {
     MemberMapper memberMapper;
     @Autowired
     FollowingDao followingDao;
+    @Autowired
+    StringRedisTemplate redisTemplate;
+    @Value("${push-pull-point}")
+    Long PushPullDiffPoint;
 
     @Override
     @Transactional
@@ -62,6 +71,7 @@ public class FollowingServiceImpl implements FollowingService {
         }
 
         followingMapper.insertSelective(following);
+        refreshFamousList(memberId);
         return R.success("关注成功");
     }
 
@@ -147,5 +157,57 @@ public class FollowingServiceImpl implements FollowingService {
             return followingDTO;
         }).collect(Collectors.toList());
         return collect;
+    }
+
+    @Override
+    public List<FollowingDTO> getUserFansAll(Long memberId) {
+        MemberFollowingExample example = new MemberFollowingExample();
+        example.createCriteria().andFollowingIdEqualTo(memberId);
+        List<MemberFollowing> followings = followingMapper.selectByExample(example);
+        List<Long> memberIds = followings.stream().map(MemberFollowing::getMemberId).collect(Collectors.toList());
+        MemberExample memberExample = new MemberExample();
+        memberExample.createCriteria().andIdIn(memberIds);
+        List<Member> followingMembers = memberMapper.selectByExample(memberExample);
+        List<FollowingDTO> collect = followingMembers.stream().map(item -> {
+            FollowingDTO followingDTO = new FollowingDTO();
+            followingDTO.setNickname(item.getNickname());
+            followingDTO.setId(item.getId());
+            followingDTO.setAvatar(item.getAvatar());
+            followingDTO.setLevelId(item.getLevelId());
+            followingDTO.setSign(item.getSign());
+            return followingDTO;
+        }).collect(Collectors.toList());
+        return collect;
+    }
+
+    @Override
+    public void refreshFamousList(Long memberId) {
+        List<Long> famous = new ArrayList<>();
+        List<FollowingGroupDTO> userFollowing = getUserFollowing(memberId);
+        List<Long> ids = new ArrayList<>();
+        for (FollowingGroupDTO followingGroupDTO : userFollowing) {
+            List<FollowingDTO> followingList = followingGroupDTO.getFollowingList();
+            for (FollowingDTO followingDTO : followingList) {
+                ids.add(followingDTO.getId());
+            }
+        }
+        MemberExample example = new MemberExample();
+        example.createCriteria().andIdIn(ids);
+        List<Member> members = memberMapper.selectByExample(example);
+        for (Member member : members) {
+            if (getUserFansAll(member.getId()).size() > PushPullDiffPoint){
+                famous.add(member.getId());
+            }
+        }
+        String redisKey = RedisConstants.USER_FAMOUS+memberId;
+        String jsonString = JSON.toJSONString(famous);
+        redisTemplate.opsForValue().set(redisKey,jsonString,RedisConstants.USER_FAMOUS_TTL, TimeUnit.DAYS);
+    }
+
+
+
+    @Override
+    public List<Long> getFamous(Long memberId) {
+        return null;
     }
 }

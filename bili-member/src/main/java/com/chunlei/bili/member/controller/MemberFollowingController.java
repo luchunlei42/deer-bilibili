@@ -1,9 +1,8 @@
 package com.chunlei.bili.member.controller;
 
 import com.chunlei.bili.common.api.R;
-import com.chunlei.bili.member.DTO.FollowingDTO;
-import com.chunlei.bili.member.DTO.FollowingGroupDTO;
-import com.chunlei.bili.member.model.FollowingGroup;
+import com.chunlei.bili.member.dto.FollowingDTO;
+import com.chunlei.bili.member.dto.FollowingGroupDTO;
 import com.chunlei.bili.member.model.MemberFollowing;
 import com.chunlei.bili.member.service.FollowingGroupService;
 import com.chunlei.bili.member.service.FollowingService;
@@ -58,6 +57,12 @@ public class MemberFollowingController {
             return R.success(null);
         }
         List<FollowingDTO> fans = followingService.getUserFans(memberId, ps, pn);
+        return R.success(fans);
+    }
+
+    @GetMapping("/following/fans/all")
+    public R getUserFans(@RequestParam("memberId") Long memberId){
+        List<FollowingDTO> fans = followingService.getUserFansAll(memberId);
         return R.success(fans);
     }
 
