@@ -20,6 +20,10 @@ spring:
       group-id: moment-timeline-service
       auto-offset-reset: earliest
       enable-auto-commit: false
+      max-poll-records: 200
+    listener:
+      type: batch
+      concurrency: 3
 
 mybatis:
   configuration:
@@ -28,7 +32,7 @@ mybatis:
     - classpath:dao/*.xml
     - classpath:com/**/mapper/*.xml
 server:
-  port: 8082
+  port: 8084
   servlet:
     context-path: /apix/moment
 push-pull-point:

@@ -91,4 +91,10 @@ public class JwtUtils {
         Claims claims = claimsJws.getBody(); // 得到用户数据的主体
         return (String)claims.get("avatar");
     }
+
+    public static String getId(String jwtToken){
+        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
+        Claims claims = claimsJws.getBody(); // 得到用户数据的主体
+        return (String)claims.get("id");
+    }
 }

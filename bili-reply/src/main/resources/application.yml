@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bili_replydb?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: kirito486
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: bili-reply
+  redis:
+    host: 192.168.56.42
+  kafka:
+    bootstrap-servers: 192.168.56.42:9092
+    producer:
+      retries: 3
+    consumer:
+      group-id: reply-service
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 1000
+      fetch-max-wait: 5
+    listener:
+      type: batch
+      concurrency: 3
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath:com/**/mapper/*.xml
+server:
+  port: 8087
+  servlet:
+    context-path: /apix/reply
+
+

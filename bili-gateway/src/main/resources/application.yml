@@ -32,6 +32,18 @@ spring:
           uri: lb://bili-member
           predicates:
             - Path=/apix/member/**
+        - id: moment-route
+          uri: lb://bili-moment
+          predicates:
+            - Path=/apix/moment/**
+        - id: thumbup-route
+          uri: lb://bili-thumbup
+          predicates:
+            - Path=/apix/thumbup/**
+        - id: reply-route
+          uri: lb://bili-reply
+          predicates:
+            - Path=/apix/reply/**
   application:
     name: bili-gateway
 server:

@@ -1,7 +1,7 @@
 package com.chunlei.bili.video.client;
 
 import com.chunlei.bili.common.api.R;
-import com.chunlei.bili.video.model.Member;
+import com.chunlei.bili.member.model.Member;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

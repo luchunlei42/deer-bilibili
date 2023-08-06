@@ -4,10 +4,13 @@
     <file url="file://$PROJECT_DIR$/bili-auth/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bili-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bili-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bili-danmaku/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bili-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bili-member/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bili-moment/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bili-reply/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bili-search/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bili-thumbup/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bili-video/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mbg/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />

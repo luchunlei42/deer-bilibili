@@ -20,7 +20,7 @@ mybatis:
     - classpath:dao/*.xml
     - classpath:com/**/mapper/*.xml
 server:
-  port: 8082
+  port: 8085
   servlet:
     context-path: /apix/member
 push-pull-point:

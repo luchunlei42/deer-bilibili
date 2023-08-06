@@ -1,15 +1,18 @@
 package com.chunlei.bili.video.controller;
 
 import com.chunlei.bili.common.api.R;
+import com.chunlei.bili.video.model.Video;
 import com.chunlei.bili.video.service.VideoService;
 import com.chunlei.bili.video.vo.SubmissionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -45,5 +48,21 @@ public class VideoController {
         return videoService.publish(videoId);
     }
 
+    @GetMapping("/info/{videoId}")
+    public R getVideoInfo(@PathVariable("videoId") Long videoId){
+        if (videoId == null) return R.failed();
+        Video video = videoService.findVideoById(videoId);
+        if (video == null){
+            return R.failed();
+        }
+        return R.success(video);
+    }
+
+    @GetMapping("/play")
+    public void playVideo(@RequestParam("videoId") Long videoId,
+                                                         HttpServletRequest request,
+                          HttpServletResponse response) throws IOException {
+        videoService.playVideo(videoId, request, response);
+    }
 
 }

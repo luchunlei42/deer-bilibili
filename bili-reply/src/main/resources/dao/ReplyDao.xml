@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chunlei.bili.reply.dao.ReplyDao">
+    <insert id="insertBatch">
+        insert into reply
+        (
+         member_id,
+        video_id,
+        status,
+         create_time,
+        update_time,
+         content,
+         parent_id,
+         root_id
+        )
+        values
+        <foreach collection="list" item="item" index= "index" separator="," >
+            (
+             #{item.memberId}
+            #{item.videoId},
+            #{item.status},
+            #{item.createTime},
+            #{item.updateTime},
+             #{content},
+             #{parentId},
+             #{rootId}
+            )
+        </foreach>
+    </insert>
+    <select id="getRootRepliesWithTime" resultType="com.chunlei.bili.reply.model.Reply">
+        select id,create_time
+        from reply
+        where video_id = #{videoId}
+        and root = 0
+    </select>
+</mapper>

@@ -16,6 +16,9 @@
       <module>bili-search</module>
       <module>bili-member</module>
     <module>bili-moment</module>
+      <module>bili-thumbup</module>
+      <module>bili-reply</module>
+      <module>bili-danmaku</module>
   </modules>
 
   <parent>

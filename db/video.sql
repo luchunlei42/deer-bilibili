@@ -104,10 +104,29 @@ create table video_detail
    bucket_name           varchar(255),
    location				varchar(255),
    `video_key`			varchar(255),
-   primary key (id)
+   primary key (id),
+   INDEX video_id (video_id)
 );
 
 alter table video_detail comment '视频储存地址';
+
+/*==============================================================*/
+/* Table: category_tag_relation                           */
+/*==============================================================*/
+create table video_stat
+(
+   id                   bigint not null auto_increment,
+   video_id           	bigint comment '视频id',
+   `view`				bigint comment '播放数',
+   `danmaku`			bigint comment '弹幕数',
+   `reply`				bigint comment '评论数',
+   `favorite`			bigint comment '收藏数',
+   `like`				bigint comment '受赞次数',
+   primary key (id),
+   INDEX video_id (video_id)
+);
+
+alter table video_stat comment '视频流量数据';
 
 insert into category (name,code,parent_cid,cat_level,show_status) values( '动画','douga',0,1,1);
 insert into category (name,code,parent_cid,cat_level,show_status) values( '番剧','anime',0,1,1);
