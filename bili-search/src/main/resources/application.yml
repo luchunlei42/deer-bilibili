@@ -1,9 +1,9 @@
 spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/bili_memberdb?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-#    username: root
-#    password: kirito486
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bili_searchdb?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: kirito486
   cloud:
     nacos:
       discovery:

@@ -25,4 +25,6 @@ public interface EsVideoRepository extends ElasticsearchRepository<EsVideo, Long
 
     @Query("{\"match\":{\"typeid\":\"?0\"}}")
     Page<EsVideo> find(Long typeId, Pageable pageable);
+
+    List<EsVideo> findEsVideosByVid(List<Long> vidList);
 }

@@ -74,4 +74,10 @@ public class EsSearchServiceImpl implements EsSearchService {
         }
         return res;
     }
+
+    @Override
+    public List<EsVideo> findVideoByIds(List<Long> videoIdList) {
+
+        return videoRepository.findEsVideosByVid(videoIdList);
+    }
 }

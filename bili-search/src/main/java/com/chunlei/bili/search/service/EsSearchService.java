@@ -12,4 +12,6 @@ public interface EsSearchService {
     void save(PublishDTO publishDTO);
 
     List<EsVideo> searchByRegion(Long rid, Integer ps, Integer pn) throws IOException;
+
+    List<EsVideo> findVideoByIds(List<Long> videoIdList);
 }
