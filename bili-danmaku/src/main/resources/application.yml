@@ -33,7 +33,7 @@ mybatis:
     - classpath:dao/*.xml
     - classpath:com/**/mapper/*.xml
 server:
-  port: 8086
+  port: 8089
   servlet:
     context-path: /apix/danmaku
 

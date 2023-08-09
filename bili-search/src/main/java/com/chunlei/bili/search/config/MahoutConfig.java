@@ -1,6 +1,7 @@
 package com.chunlei.bili.search.config;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import org.apache.mahout.cf.taste.impl.model.jdbc.ConnectionPoolDataSource;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLJDBCDataModel;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.JDBCDataModel;
@@ -17,6 +18,8 @@ public class MahoutConfig {
         dataSource.setUser("root");
         dataSource.setPassword("kirito486");
         dataSource.setDatabaseName("bili_searchdb");
+
+        //ConnectionPoolDataSource connectionPool=new ConnectionPoolDataSource(dataSource);
 
         JDBCDataModel dataModel = new MySQLJDBCDataModel(dataSource,"member_video_preference","member_id","video_id","score","time");
         return dataModel;
