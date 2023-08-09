@@ -27,7 +27,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static com.chunlei.bili.search.config.EsRestClientConfig.VIDEO_INDEX;
 
@@ -51,8 +53,8 @@ public class EsSearchServiceImpl implements EsSearchService {
 
     @Override
     public List<EsVideo> searchByRegion(Long rid, Integer ps, Integer pn) throws IOException {
-        //Pageable pageable = PageRequest.of(pn,ps, Sort.Direction.DESC,"pubdate");
-        //return videoRepository.findByTypeId(rid,pageable);
+//        Pageable pageable = PageRequest.of(pn,ps, Sort.Direction.DESC,"pubdate");
+//        return videoRepository.findByTypeId(rid);
 
         List<EsVideo> res = new ArrayList<>();
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -77,7 +79,9 @@ public class EsSearchServiceImpl implements EsSearchService {
 
     @Override
     public List<EsVideo> findVideoByIds(List<Long> videoIdList) {
-
-        return videoRepository.findEsVideosByVid(videoIdList);
+        List<EsVideo> list = new ArrayList<>();
+        Iterable<EsVideo> all = videoRepository.findAllById(videoIdList);
+        all.forEach(single->{list.add(single);});
+        return list;
     }
 }
