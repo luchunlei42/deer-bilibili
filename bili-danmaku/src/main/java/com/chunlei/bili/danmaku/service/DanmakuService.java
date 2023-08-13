@@ -6,4 +6,6 @@ public interface DanmakuService {
     void addDanmakuToRedis(Danmaku danmaku);
 
     void addDanmaku(Danmaku danmaku);
+
+    Long getDanmakuCount(Long videoId);
 }

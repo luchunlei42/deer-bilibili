@@ -1,6 +1,7 @@
 package com.chunlei.bili.search.service.Impl;
 
 import com.chunlei.bili.search.dto.OperationDTO;
+import com.chunlei.bili.search.dto.VideoDTO;
 import com.chunlei.bili.search.entity.EsVideo;
 import com.chunlei.bili.search.mapper.MemberVideoPreferenceMapper;
 import com.chunlei.bili.search.model.MemberVideoPreference;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,9 +73,9 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     @Override
-    public List<EsVideo> getRecommendVideoByUser(Long memberId, Integer ps) {
+    public List<VideoDTO> getRecommendVideoByUser(Long memberId, Integer ps) {
 
-        List<EsVideo> videos = null;
+        List<VideoDTO> videos = null;
 
         try {
             UserSimilarity similarity = new PearsonCorrelationSimilarity(dataModel);
@@ -85,15 +87,19 @@ public class RecommendServiceImpl implements RecommendService {
 
         } catch (TasteException e) {
             e.printStackTrace();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
         return videos;
     }
 
     @Override
-    public List<EsVideo> getRecommendVideoByItem(Long memberId, Long videoId, Integer ps) {
+    public List<VideoDTO> getRecommendVideoByItem(Long memberId, Long videoId, Integer ps) {
 
-        List<EsVideo> videos = null;
+        List<VideoDTO> videos = null;
 
         try {
             ItemSimilarity similarity = new PearsonCorrelationSimilarity(dataModel);
@@ -101,7 +107,7 @@ public class RecommendServiceImpl implements RecommendService {
             List<RecommendedItem> recommend = recommender.recommendedBecause(memberId,videoId, ps);
             List<Long> videoIdList = recommend.stream().map(RecommendedItem::getItemID).collect(Collectors.toList());
             videos = searchService.findVideoByIds(videoIdList);
-        } catch (TasteException e) {
+        } catch (TasteException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 
-@FeignClient("bili-video")
+@FeignClient(value = "bili-video",path = "apix/video")
 public interface VideoFeignClient {
 
     @GetMapping("/info/{videoId}")

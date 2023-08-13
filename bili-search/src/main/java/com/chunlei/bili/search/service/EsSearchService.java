@@ -1,17 +1,22 @@
 package com.chunlei.bili.search.service;
 
 import com.chunlei.bili.search.dto.PublishDTO;
+import com.chunlei.bili.search.dto.VideoDTO;
+import com.chunlei.bili.search.dto.VideoEntity;
 import com.chunlei.bili.search.entity.EsVideo;
 import org.springframework.data.domain.Page;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface EsSearchService {
 
     void save(PublishDTO publishDTO);
 
-    List<EsVideo> searchByRegion(Long rid, Integer ps, Integer pn) throws IOException;
+    List<VideoDTO> searchByRegion(Long rid, Integer ps, Integer pn) throws IOException, ExecutionException, InterruptedException;
 
-    List<EsVideo> findVideoByIds(List<Long> videoIdList);
+    List<VideoDTO> findVideoByIds(List<Long> videoIdList) throws ExecutionException, InterruptedException;
+
+    VideoEntity getVideoEntity(Long videoId) throws ExecutionException, InterruptedException;
 }

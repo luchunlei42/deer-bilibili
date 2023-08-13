@@ -82,7 +82,6 @@ public class PersistJobHandler {
             likeDao.insertOrUpdateBatch(likes);
             likeDao.deleteBatch(delLikes);
             likeCountDao.insertOrUpdateBatch(likeCounts);
-
         }
         return ReturnT.SUCCESS;
     }

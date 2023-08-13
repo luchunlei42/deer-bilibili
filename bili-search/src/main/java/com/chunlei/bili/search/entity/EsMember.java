@@ -1,15 +1,19 @@
 package com.chunlei.bili.search.entity;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Data
+@Document(indexName = "member",createIndex = false)
 public class EsMember {
 
     @Field(type = FieldType.Text)
-    private String author;
+    private String nickname;
 
+    @Id
     @Field(type = FieldType.Keyword)
     private Long mid;
 

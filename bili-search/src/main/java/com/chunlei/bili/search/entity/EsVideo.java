@@ -18,8 +18,8 @@ public class EsVideo {
     @Field(type = FieldType.Keyword)
     private Long vid;
 
-    @Field(type = FieldType.Nested)
-    private EsMember member;
+    @Field(type = FieldType.Keyword)
+    private Long mid;
 
     @Field(type = FieldType.Keyword, name = "typeid")
     private Long typeId;
@@ -38,15 +38,6 @@ public class EsVideo {
 
     @Field(type = FieldType.Keyword)
     private String pic;
-
-    @Field(type = FieldType.Long)
-    private Long play;
-
-    @Field(type = FieldType.Long,name = "video_review")
-    private Long videoReview;
-
-    @Field(type = FieldType.Long)
-    private Long favorites;
 
     @Field(type = FieldType.Keyword)
     private List<String> tag;

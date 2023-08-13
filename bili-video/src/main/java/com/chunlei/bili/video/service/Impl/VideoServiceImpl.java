@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.chunlei.bili.common.api.R;
+import com.chunlei.bili.common.dto.UserDTO;
 import com.chunlei.bili.common.utils.UserHolder;
 import com.chunlei.bili.member.model.Member;
 import com.chunlei.bili.video.client.BiliMemberFeignClient;
@@ -18,13 +19,13 @@ import com.chunlei.bili.video.mapper.*;
 import com.chunlei.bili.video.model.*;
 import com.chunlei.bili.video.service.SysUploadTaskService;
 import com.chunlei.bili.video.service.VideoService;
+import com.chunlei.bili.video.service.VideoStatService;
 import com.chunlei.bili.video.vo.PublishDTO;
 import com.chunlei.bili.video.vo.PublishMemberDTO;
 import com.chunlei.bili.video.vo.SubmissionDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.connector.ClientAbortException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,15 +34,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 @Service
 @Slf4j
@@ -69,6 +67,8 @@ public class VideoServiceImpl implements VideoService {
     BiliSearchFeignClient searchFeignClient;
     @Autowired
     AmazonS3 amazonS3;
+    @Autowired
+    VideoStatService videoStatService;
 
     @Override
     @Transactional
@@ -178,12 +178,12 @@ public class VideoServiceImpl implements VideoService {
         memberDTO.setAvatar(member.getAvatar());
         memberDTO.setMid(member.getId());
         memberDTO.setLevel(member.getGrowth());
+        memberDTO.setVideo(1L);
         //TODO:获取粉丝数
 
         publishDTO.setMember(memberDTO);
 
         //TODO:获取播放量，弹幕量，收藏等等
-
 
         return searchFeignClient.publishVideo(publishDTO);
     }
@@ -196,6 +196,11 @@ public class VideoServiceImpl implements VideoService {
         if (videoDetails == null || videoDetails.size() == 0){
             throw new RuntimeException("视频不存在");
         }
+        UserDTO user = UserHolder.getUser();
+        if (user != null){
+            videoStatService.setVideoView(videoId,user.getId());
+        }
+
         VideoDetail detail = videoDetails.get(0);
         ObjectMetadata metadata = amazonS3.getObjectMetadata(detail.getBucketName(), detail.getVideoKey());
         long contentLength = metadata.getContentLength();
@@ -241,6 +246,16 @@ public class VideoServiceImpl implements VideoService {
                 log.error(e.getMessage());
             }
         }
+    }
 
+    @Override
+    public VideoDetail getVideoDetail(Long videoId) {
+        VideoDetailExample example = new VideoDetailExample();
+        example.createCriteria().andVideoIdEqualTo(videoId);
+        List<VideoDetail> videoDetails = videoDetailMapper.selectByExample(example);
+        if (videoDetails != null && videoDetails.size()>0){
+            return videoDetails.get(0);
+        }
+        return null;
     }
 }

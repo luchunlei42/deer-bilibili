@@ -27,12 +27,6 @@ public class PublishDTO {
 
     private String pic;
 
-    private Long play;
-
-    private Long videoReview;
-
-    private Long favorites;
-
     private List<String> tag;
 
     private Date pubDate;

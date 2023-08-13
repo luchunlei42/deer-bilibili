@@ -2,8 +2,8 @@ package com.chunlei.bili.video.service;
 
 import com.chunlei.bili.common.api.R;
 import com.chunlei.bili.video.model.Video;
+import com.chunlei.bili.video.model.VideoDetail;
 import com.chunlei.bili.video.vo.SubmissionDTO;
-import org.springframework.core.io.InputStreamResource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,4 +18,6 @@ public interface VideoService {
     R publish(Long videoId);
 
     void playVideo(Long videoId, HttpServletRequest request, HttpServletResponse response) throws IOException;
+
+    VideoDetail getVideoDetail(Long videoId);
 }

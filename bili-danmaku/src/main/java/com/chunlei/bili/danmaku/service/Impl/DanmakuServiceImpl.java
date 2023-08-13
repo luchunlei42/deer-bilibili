@@ -6,7 +6,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chunlei.bili.danmaku.component.KafkaProducer;
 import com.chunlei.bili.danmaku.config.KafkaConfig;
+import com.chunlei.bili.danmaku.mapper.DanmakuMapper;
 import com.chunlei.bili.danmaku.model.Danmaku;
+import com.chunlei.bili.danmaku.model.DanmakuExample;
 import com.chunlei.bili.danmaku.service.DanmakuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -19,10 +21,13 @@ import java.util.List;
 public class DanmakuServiceImpl implements DanmakuService {
 
     private static final String DANMAKU_PREFIX = "danmaku:";
+    private static final Integer DANMAKU_EXPIRE = 3600;
     @Autowired
     private StringRedisTemplate redisTemplate;
     @Autowired
     KafkaProducer kafkaProducer;
+    @Autowired
+    DanmakuMapper danmakuMapper;
 
     @Override
     public void addDanmakuToRedis(Danmaku danmaku) {
@@ -33,11 +38,27 @@ public class DanmakuServiceImpl implements DanmakuService {
             list = JSONArray.parseArray(value, Danmaku.class);
         }
         list.add(danmaku);
-        redisTemplate.opsForValue().set(key, JSONObject.toJSONString(list));
+        redisTemplate.opsForValue().set(key, JSONObject.toJSONString(list),DANMAKU_EXPIRE);
     }
 
     @Override
     public void addDanmaku(Danmaku danmaku) {
         kafkaProducer.sendMessage(KafkaConfig.DANMAKU_TOPIC, JSON.toJSONString(danmaku),System.currentTimeMillis(),null);
+    }
+
+    @Override
+    public Long getDanmakuCount(Long videoId) {
+        String key = DANMAKU_PREFIX + videoId;
+        String value = redisTemplate.opsForValue().get(key);
+        List<Danmaku> list = new ArrayList<>();
+        if (StrUtil.isNotEmpty(value)){
+            list = JSONArray.parseArray(value, Danmaku.class);
+        } else {
+            DanmakuExample example = new DanmakuExample();
+            example.createCriteria().andVideoIdEqualTo(videoId);
+            list = danmakuMapper.selectByExample(example);
+            redisTemplate.opsForValue().set(key, JSONObject.toJSONString(list),DANMAKU_EXPIRE);
+        }
+        return (long) list.size();
     }
 }

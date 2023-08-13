@@ -47,7 +47,9 @@ public class KafkaConsumer {
                 Long videoId = reply.getVideoId();
                 Long orDefault = replyIncrementCountMap.getOrDefault(videoId, 0L);
                 replyIncrementCountMap.put(videoId,orDefault+1);
-                videoToReplyMap.computeIfAbsent(videoId,v->new ArrayList<>()).add(Pair.of(reply.getId().toString(), (double) reply.getCreateTime().getTime()));
+                if (reply.getRootId() == 0){
+                    videoToReplyMap.computeIfAbsent(videoId,v->new ArrayList<>()).add(Pair.of(reply.getId().toString(), (double) reply.getCreateTime().getTime()));
+                }
                 //TODO:更新用户的数据，子评论数，根评论数
                 ack.acknowledge();
             }catch (Exception e){

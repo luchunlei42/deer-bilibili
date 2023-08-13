@@ -113,6 +113,7 @@ public class UserServiceImpl implements UserService {
         String nickName = getStringRandom(10);
         user.setUsername(username);
         user.setNickname(nickName);
+        user.setLevelId(0L);
         memberMapper.insertSelective(user);
         return user;
     }

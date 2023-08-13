@@ -11,9 +11,15 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ThreadPoolConfig {
 
     private final static int THREAD_SIZE = 8;
+    private final static int FETCH_THREAD_SIZE = 8;
 
     @Bean
-    public Executor getUploadThreadPool(){
+    public Executor uploadThreadPool(){
         return Executors.newFixedThreadPool(THREAD_SIZE);
+    }
+
+    @Bean
+    public Executor fetchVideoThreadPool(){
+        return Executors.newFixedThreadPool(FETCH_THREAD_SIZE);
     }
 }

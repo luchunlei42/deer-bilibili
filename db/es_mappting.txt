@@ -5,45 +5,13 @@ PUT /video
       "vid": {
         "type": "keyword"
       },
-      "member": {
-        "type": "nested",
-        "properties": {
-          "author": {
-            "type": "text",
-            "analyzer": "ik_smart",
-            "fields": {
-              "keyword": {
-                "type": "keyword"
-              }
-            }
-          },
-          "mid": {
-            "type": "keyword"
-          },
-          "avatar": {
-            "type": "keyword"
-          },
-          "sign": {
-            "type": "keyword"
-          },
-          "level": {
-            "type": "integer"
-          },
-          "fans": {
-            "type": "long"
-          },
-          "video": {
-            "type": "long"
-          }
-        }
+      "mid": {
+        "type": "keyword"
       },
       "typeid": {
         "type": "keyword"
       },
       "typename":{
-        "type": "keyword"
-      },
-      "videourl":{
         "type": "keyword"
       },
       "title": {
@@ -58,12 +26,6 @@ PUT /video
         "type": "keyword"
       },
       "play": {
-        "type": "long"
-      },
-      "video_review": {
-        "type": "long"
-      },
-      "favorites": {
         "type": "long"
       },
       "tag": {
@@ -82,6 +44,41 @@ PUT /video
       },
       "duration": {
         "type": "keyword"
+      }
+    }
+  }
+}
+
+PUT /member
+{
+  "mappings": {
+    "properties": {
+      "nickname": {
+        "type": "text",
+        "analyzer": "ik_smart",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "mid": {
+        "type": "keyword"
+      },
+      "avatar": {
+        "type": "keyword"
+      },
+      "sign": {
+        "type": "keyword"
+      },
+      "level": {
+        "type": "integer"
+      },
+      "fans": {
+        "type": "long"
+      },
+      "video": {
+        "type": "long"
       }
     }
   }

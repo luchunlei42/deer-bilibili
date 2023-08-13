@@ -2,11 +2,10 @@ package com.chunlei.bili.video.controller;
 
 import com.chunlei.bili.common.api.R;
 import com.chunlei.bili.video.model.Video;
+import com.chunlei.bili.video.model.VideoDetail;
 import com.chunlei.bili.video.service.VideoService;
 import com.chunlei.bili.video.vo.SubmissionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +44,7 @@ public class VideoController {
      */
     @PostMapping("/publish")
     public R publishVideo(@RequestParam Long videoId){
+
         return videoService.publish(videoId);
     }
 
@@ -63,6 +63,12 @@ public class VideoController {
                                                          HttpServletRequest request,
                           HttpServletResponse response) throws IOException {
         videoService.playVideo(videoId, request, response);
+    }
+
+    @GetMapping("/detail")
+    public VideoDetail getVideoDetail(@RequestParam("videoId") Long videoId){
+        VideoDetail videoDetail =  videoService.getVideoDetail(videoId);
+        return videoDetail;
     }
 
 }
