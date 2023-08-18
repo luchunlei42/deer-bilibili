@@ -24,6 +24,12 @@ public class ThumbUpServiceImpl implements ThumbUpService {
     public void like(Like like) {
 
         Long memberId = UserHolder.getUser().getId();
+        String redisKey = RedisConfig.LIKE_PREFIX+memberId;
+        if (redisTemplate.opsForZSet().score(redisKey,like.getVideoId().toString()) != null){
+            like.setStatus(false);
+        } else {
+            like.setStatus(true);
+        }
         like.setLikedMemberId(memberId);
         like.setCreateTime(new Date());
         like.setUpdateTime(new Date());
@@ -41,5 +47,15 @@ public class ThumbUpServiceImpl implements ThumbUpService {
             return Long.valueOf(s);
         }
         return null;
+    }
+
+    @Override
+    public Boolean isLike(Long videoId, Long memberId) {
+        String redisKey = RedisConfig.LIKE_PREFIX+memberId;
+        if (redisTemplate.opsForZSet().score(redisKey,videoId.toString()) != null){
+            //查数据库
+            return true;
+        }
+        return false;
     }
 }

@@ -1,6 +1,8 @@
 package com.chunlei.bili.video.service.Impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
@@ -10,6 +12,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.chunlei.bili.common.api.R;
 import com.chunlei.bili.common.dto.UserDTO;
+import com.chunlei.bili.common.utils.JwtUtils;
 import com.chunlei.bili.common.utils.UserHolder;
 import com.chunlei.bili.member.model.Member;
 import com.chunlei.bili.video.client.BiliMemberFeignClient;
@@ -38,8 +41,13 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+
+import static com.chunlei.bili.common.constant.WebConstants.TOKEN_HEAD;
+import static com.chunlei.bili.common.utils.RedisConstants.LOGIN_USER_KEY;
+import static com.chunlei.bili.common.utils.RedisConstants.LOGIN_USER_TTL;
 
 @Service
 @Slf4j
@@ -196,9 +204,15 @@ public class VideoServiceImpl implements VideoService {
         if (videoDetails == null || videoDetails.size() == 0){
             throw new RuntimeException("视频不存在");
         }
-        UserDTO user = UserHolder.getUser();
-        if (user != null){
-            videoStatService.setVideoView(videoId,user.getId());
+        String token = request.getHeader("Authorization");
+        log.info("token is :{}",token);
+        if (!StrUtil.isBlank(token) && token.startsWith(TOKEN_HEAD)){
+            token = token.substring(TOKEN_HEAD.length());
+            boolean verify = JwtUtils.checkToken(token);
+            if (verify){
+                String id = JwtUtils.getId(token);
+                videoStatService.setVideoView(videoId, Long.valueOf(id));
+            }
         }
 
         VideoDetail detail = videoDetails.get(0);

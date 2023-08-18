@@ -25,6 +25,7 @@ spring:
     listener:
       type: batch
       concurrency: 3
+      ack-mode: manual_immediate
 
 mybatis:
   configuration:

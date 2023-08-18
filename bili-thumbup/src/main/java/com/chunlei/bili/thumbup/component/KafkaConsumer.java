@@ -54,7 +54,7 @@ public class KafkaConsumer {
                     Long count = likeCountMap.getOrDefault(videoId, 0L)-1;
                     likeCountMap.put(videoId,count);
 
-                    redisTemplate.opsForZSet().remove(likeKey, videoId);
+                    redisTemplate.opsForZSet().remove(likeKey, videoId.toString());
                     if (redisTemplate.opsForSet().isMember(RedisConfig.UPDATE_LIKE_PREFIX+memberId%RedisConfig.shards,memberId+"-"+videoId)){
                         redisTemplate.opsForSet().remove(RedisConfig.UPDATE_LIKE_PREFIX+memberId%RedisConfig.shards,memberId+"-"+videoId);
                     }

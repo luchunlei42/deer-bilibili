@@ -6,4 +6,6 @@ public interface ThumbUpService {
     void like(Like like);
 
     Long getLikeByVideoId(Long videoId);
+
+    Boolean isLike(Long videoId, Long memberId);
 }
