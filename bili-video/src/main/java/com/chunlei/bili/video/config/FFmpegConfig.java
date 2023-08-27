@@ -15,7 +15,7 @@ public class FFmpegConfig {
     @Bean
     @SneakyThrows
     public FFmpeg fFmpeg(){
-        return new FFmpeg(FFmpeg.FFMPEG);
+        return new FFmpeg(FFMPEG_PATH);
     }
 
     @Bean

@@ -1,0 +1,44 @@
+[2023-08-19T00:00:51.220+08:00] [WARN] [Thread-6-34] [com.alibaba.nacos.common.http.HttpClientBeanHolder] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [HttpClientBeanHolder.java,102,com.alibaba.nacos.common.http.HttpClientBeanHolder,shutdown] [[HttpClientBeanHolder] Start destroying common HttpClient] ## ''
+[2023-08-19T00:00:51.220+08:00] [WARN] [Thread-15-46] [com.alibaba.nacos.common.notify.NotifyCenter] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [NotifyCenter.java,136,com.alibaba.nacos.common.notify.NotifyCenter,shutdown] [[NotifyCenter] Start destroying Publisher] ## ''
+[2023-08-19T00:00:51.230+08:00] [WARN] [Thread-15-46] [com.alibaba.nacos.common.notify.NotifyCenter] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [NotifyCenter.java,153,com.alibaba.nacos.common.notify.NotifyCenter,shutdown] [[NotifyCenter] Destruction of the end] ## ''
+[2023-08-19T00:00:51.230+08:00] [WARN] [Thread-6-34] [com.alibaba.nacos.common.http.HttpClientBeanHolder] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [HttpClientBeanHolder.java,111,com.alibaba.nacos.common.http.HttpClientBeanHolder,shutdown] [[HttpClientBeanHolder] Destruction of the end] ## ''
+[2023-08-19T00:00:51.546+08:00] [INFO] [SpringApplicationShutdownHook-100] [com.alibaba.cloud.nacos.registry.NacosServiceRegistry] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [NacosServiceRegistry.java,95,com.alibaba.cloud.nacos.registry.NacosServiceRegistry,deregister] [De-registering from Nacos Server now...] ## ''
+[2023-08-19T00:00:51.877+08:00] [ERROR] [SpringApplicationShutdownHook-100] [com.alibaba.cloud.nacos.registry.NacosServiceRegistry] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [NacosServiceRegistry.java,111,com.alibaba.cloud.nacos.registry.NacosServiceRegistry,deregister] [ERR_NACOS_DEREGISTER, de-register failed...NacosRegistration{nacosDiscoveryProperties=NacosDiscoveryProperties{serverAddr='127.0.0.1:8848', username='', password='', endpoint='', namespace='', watchDelay=30000, logName='', service='bili-search', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={IPv6=null, preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='26.26.26.1', networkInterface='', port=8083, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null, instanceEnabled=true, ephemeral=true, failureToleranceEnabled=false}, ipDeleteTimeout=null, failFast=true}},] ## ' ErrCode:-401, ErrMsg:Client not connected, current status:UNHEALTHY
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:639)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:619)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:356)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.doDeregisterService(NamingGrpcClientProxy.java:233)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.deregisterService(NamingGrpcClientProxy.java:219)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.deregisterService(NamingClientProxyDelegate.java:125)
+	at com.alibaba.nacos.client.naming.NacosNamingService.deregisterInstance(NacosNamingService.java:201)
+	at com.alibaba.nacos.client.naming.NacosNamingService.deregisterInstance(NacosNamingService.java:191)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.deregister(NacosServiceRegistry.java:107)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.deregister(AbstractAutoServiceRegistration.java:249)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.stop(AbstractAutoServiceRegistration.java:264)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.destroy(AbstractAutoServiceRegistration.java:201)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleElement.invoke(InitDestroyAnnotationBeanPostProcessor.java:389)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:347)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:177)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:197)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:587)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:559)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1163)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:520)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1156)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1106)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1075)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:172)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1021)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:145)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:114)
+	at java.lang.Thread.run(Thread.java:750)
+'
+[2023-08-19T00:00:51.878+08:00] [INFO] [SpringApplicationShutdownHook-100] [com.alibaba.cloud.nacos.registry.NacosServiceRegistry] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [NacosServiceRegistry.java,115,com.alibaba.cloud.nacos.registry.NacosServiceRegistry,deregister] [De-registration finished.] ## ''
+[2023-08-19T00:00:51.890+08:00] [INFO] [SpringApplicationShutdownHook-100] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [AbstractEntityManagerFactoryBean.java,651,org.springframework.orm.jpa.AbstractEntityManagerFactoryBean,destroy] [Closing JPA EntityManagerFactory for persistence unit 'default'] ## ''
+[2023-08-19T00:00:51.898+08:00] [INFO] [SpringApplicationShutdownHook-100] [com.zaxxer.hikari.HikariDataSource] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [HikariDataSource.java,350,com.zaxxer.hikari.HikariDataSource,close] [HikariPool-1 - Shutdown initiated...] ## ''
+[2023-08-19T00:00:51.905+08:00] [INFO] [SpringApplicationShutdownHook-100] [com.zaxxer.hikari.HikariDataSource] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [HikariDataSource.java,352,com.zaxxer.hikari.HikariDataSource,close] [HikariPool-1 - Shutdown completed.] ## ''
