@@ -32,3 +32,8 @@ mybatis:
   mapper-locations:
     - classpath:dao/*.xml
     - classpath:com/**/mapper/*.xml
+
+ffpmeg:
+  path:
+    temp-path: "/dash/tmp/"
+    base-path: "dash/data/"

@@ -7,6 +7,8 @@ import com.chunlei.bili.thumbup.config.KafkaConfig;
 import com.chunlei.bili.thumbup.config.RedisConfig;
 import com.chunlei.bili.thumbup.model.Like;
 import com.chunlei.bili.thumbup.service.ThumbUpService;
+import com.chunlei.bili.thumbup.utils.BloomFilterUtil;
+import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class ThumbUpServiceImpl implements ThumbUpService {
     KafkaProducer kafkaProducer;
     @Autowired
     StringRedisTemplate redisTemplate;
+    @Autowired
+    BloomFilterUtil bloomFilterUtil;
 
     @Override
     public void like(Like like) {
@@ -51,11 +55,16 @@ public class ThumbUpServiceImpl implements ThumbUpService {
 
     @Override
     public Boolean isLike(Long videoId, Long memberId) {
-        String redisKey = RedisConfig.LIKE_PREFIX+memberId;
-        if (redisTemplate.opsForZSet().score(redisKey,videoId.toString()) != null){
-            //查数据库
-            return true;
+        //使用布隆过滤器判断是否点赞
+        RBloomFilter<Object> bloomFilter = bloomFilterUtil.getBloomFilter(RedisConfig.LIKE_BLOOM + videoId);
+        boolean b = bloomFilterUtil.containsInBloomFilter(bloomFilter, memberId);
+        if (b){
+            String redisKey = RedisConfig.LIKE_PREFIX+memberId;
+            if (redisTemplate.opsForZSet().score(redisKey,videoId.toString()) != null){
+                return true;
+            }
         }
+        //查数据库判断
         return false;
     }
 }

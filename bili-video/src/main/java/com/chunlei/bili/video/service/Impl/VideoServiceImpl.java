@@ -1,14 +1,13 @@
 package com.chunlei.bili.video.service.Impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
+import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import com.chunlei.bili.common.api.R;
 import com.chunlei.bili.common.dto.UserDTO;
@@ -17,9 +16,12 @@ import com.chunlei.bili.common.utils.UserHolder;
 import com.chunlei.bili.member.model.Member;
 import com.chunlei.bili.video.client.BiliMemberFeignClient;
 import com.chunlei.bili.video.client.BiliSearchFeignClient;
+import com.chunlei.bili.video.constant.FilePath;
+import com.chunlei.bili.video.constant.MinioConstant;
 import com.chunlei.bili.video.dao.VideoTagRelationDao;
 import com.chunlei.bili.video.mapper.*;
 import com.chunlei.bili.video.model.*;
+import com.chunlei.bili.video.model.Tag;
 import com.chunlei.bili.video.service.SysUploadTaskService;
 import com.chunlei.bili.video.service.VideoService;
 import com.chunlei.bili.video.service.VideoStatService;
@@ -27,7 +29,10 @@ import com.chunlei.bili.video.vo.PublishDTO;
 import com.chunlei.bili.video.vo.PublishMemberDTO;
 import com.chunlei.bili.video.vo.SubmissionDTO;
 import lombok.extern.slf4j.Slf4j;
+import net.bramp.ffmpeg.FFmpeg;
+import net.bramp.ffmpeg.FFprobe;
 import org.apache.catalina.connector.ClientAbortException;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +41,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -77,6 +84,12 @@ public class VideoServiceImpl implements VideoService {
     AmazonS3 amazonS3;
     @Autowired
     VideoStatService videoStatService;
+    @Autowired
+    FilePath filePath;
+    @Autowired
+    FFmpeg fFmpeg;
+    @Autowired
+    FFprobe fFprobe;
 
     @Override
     @Transactional
@@ -271,5 +284,21 @@ public class VideoServiceImpl implements VideoService {
             return videoDetails.get(0);
         }
         return null;
+    }
+
+    @Override
+    public String getVideoPlayUrl(String k) {
+
+        Date currentDate = new Date();
+        Date expireDate = DateUtil.offsetMillisecond(currentDate, MinioConstant.PRE_SIGN_URL_EXPIRE.intValue());
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest("video", k).withExpiration(expireDate).withMethod(HttpMethod.GET);
+        URL url = amazonS3.generatePresignedUrl(request);
+        return url.toString();
+    }
+
+    public void mp4ToDash(String key){
+        GetObjectRequest getObjectRequest = new GetObjectRequest("video", key);
+        amazonS3.getObject(getObjectRequest,new File(filePath+key));
+
     }
 }

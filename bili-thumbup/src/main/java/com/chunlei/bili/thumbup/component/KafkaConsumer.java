@@ -6,8 +6,11 @@ import com.chunlei.bili.moment.model.UserMoments;
 import com.chunlei.bili.thumbup.config.KafkaConfig;
 import com.chunlei.bili.thumbup.config.RedisConfig;
 import com.chunlei.bili.thumbup.model.Like;
+import com.chunlei.bili.thumbup.utils.BloomFilterUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.redisson.api.RBloomFilter;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -25,6 +28,10 @@ import java.util.concurrent.TimeUnit;
 public class KafkaConsumer {
     @Autowired
     StringRedisTemplate redisTemplate;
+    @Autowired
+    RedissonClient redissonClient;
+    @Autowired
+    BloomFilterUtil bloomFilterUtil;
 
     @KafkaListener(topics = {KafkaConfig.LIKE_TOPIC})
     public void consumeTimelineMessageBatch(List<ConsumerRecord<String,String>> consumerRecords, Acknowledgment ack){
@@ -43,6 +50,10 @@ public class KafkaConsumer {
                     likeCountMap.put(videoId,count);
                     redisTemplate.opsForZSet().add(likeKey, videoId.toString(),timestamp);
                     redisTemplate.expire(likeKey,RedisConfig.LIKE_EXPIRE, TimeUnit.MINUTES);
+                    //将记录放到布隆过滤器中
+                    RBloomFilter<Object> bloomFilter = bloomFilterUtil.getBloomFilter(RedisConfig.LIKE_BLOOM + videoId);
+                    bloomFilterUtil.addInBloomFilter(bloomFilter,memberId);
+
                     //TODO: 截取2000，防止缓存过长
 
                     if (redisTemplate.opsForSet().isMember(RedisConfig.UPDATE_NOTLIKE_PREFIX+memberId%RedisConfig.shards,memberId+"-"+videoId)){

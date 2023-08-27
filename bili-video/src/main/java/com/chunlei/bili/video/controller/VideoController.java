@@ -1,6 +1,7 @@
 package com.chunlei.bili.video.controller;
 
 import com.chunlei.bili.common.api.R;
+import com.chunlei.bili.video.constant.FilePath;
 import com.chunlei.bili.video.model.Video;
 import com.chunlei.bili.video.model.VideoDetail;
 import com.chunlei.bili.video.service.VideoService;
@@ -18,6 +19,8 @@ import java.util.concurrent.ExecutionException;
 public class VideoController {
     @Autowired
     VideoService videoService;
+    @Autowired
+    FilePath filePath;
 
     /**
      * 投稿
@@ -63,6 +66,12 @@ public class VideoController {
                                                          HttpServletRequest request,
                           HttpServletResponse response) throws IOException {
         videoService.playVideo(videoId, request, response);
+    }
+
+    @GetMapping("/playUrl")
+    public R<String> playVideoUrl(@RequestParam("k") String k){
+        String playUrl = videoService.getVideoPlayUrl(k);
+        return R.success(playUrl);
     }
 
     @GetMapping("/detail")

@@ -21,4 +21,5 @@ public class RedisConfig {
 
     public static final Integer LIKE_COUNT_EXPIRE = 60;
 
+    public static final String LIKE_BLOOM = "like:bloom:";
 }

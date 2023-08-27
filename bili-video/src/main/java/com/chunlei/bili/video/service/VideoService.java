@@ -20,4 +20,6 @@ public interface VideoService {
     void playVideo(Long videoId, HttpServletRequest request, HttpServletResponse response) throws IOException;
 
     VideoDetail getVideoDetail(Long videoId);
+
+    String getVideoPlayUrl(String k);
 }
