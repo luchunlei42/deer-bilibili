@@ -51,7 +51,7 @@ public class SearchController {
     }
 
     @GetMapping("/type")
-    public R searchByKeyword(@RequestParam("keyword") String keyword,@RequestParam("search_type")String type,@RequestParam("page") Integer page){
+    public R searchByKeyword(@RequestParam("keyword") String keyword,@RequestParam("search_type")String type,@RequestParam("page") Integer page) throws IOException, ExecutionException, InterruptedException {
         List<VideoDTO> r = searchService.searchByKeyword(keyword,type,page);
         return R.success(r);
     }
