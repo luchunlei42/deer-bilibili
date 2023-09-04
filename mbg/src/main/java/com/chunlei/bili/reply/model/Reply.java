@@ -1,5 +1,6 @@
 package com.chunlei.bili.reply.model;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,16 +9,20 @@ public class Reply implements Serializable {
 
     private Long memberId;
 
+    @NotNull
     private Long videoId;
 
     private Integer status;
 
+    @NotNull
     private String content;
 
     private Integer childCount;
 
+    @NotNull
     private Long parentId;
 
+    @NotNull
     private Long rootId;
 
     private Date createTime;

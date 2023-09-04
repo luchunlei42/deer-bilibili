@@ -3,7 +3,7 @@
 <mapper namespace="com.chunlei.bili.video.dao.VideoStatDao">
     <update id="incrementReplyCountBatch">
         <foreach collection="map.entrySet()" item="value" index="key" separator=";">
-            update reply
+            update video_stat
                 set reply = reply + #{value}
             where video_id = #{key}
         </foreach>

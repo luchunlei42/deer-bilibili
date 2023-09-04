@@ -6,6 +6,7 @@ import com.chunlei.bili.reply.model.Reply;
 import com.chunlei.bili.reply.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ReplyController {
     ReplyService replyService;
 
     @PostMapping("/post")
-    public R postReply(@RequestBody Reply reply){
+    public R postReply(@Validated @RequestBody Reply reply){
         if (reply == null || reply.getVideoId() == null){
             return R.failed("参数不能为空");
         }
@@ -57,7 +58,7 @@ public class ReplyController {
     public R getReplyMain(@RequestParam("vid") Long videoId,
                           @RequestParam(value = "ps", defaultValue = "5") Integer ps,
                           @RequestParam(value = "pn") Integer pn,
-                          @RequestParam("cursor") Integer cursor) throws ExecutionException, InterruptedException {
+                          @RequestParam(value = "cursor",required = false) Integer cursor) throws ExecutionException, InterruptedException {
         if (videoId == null){
             return R.success(null);
         }

@@ -4,7 +4,10 @@
   <resultMap id="BaseResultMap" type="com.chunlei.bili.danmaku.model.Danmaku">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
     <result column="video_id" jdbcType="BIGINT" property="videoId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="color" jdbcType="CHAR" property="color" />
     <result column="danmaku_time" jdbcType="VARCHAR" property="danmakuTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
@@ -70,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_id, video_id, danmaku_time, create_time
+    id, member_id, author, video_id, type, color, danmaku_time, create_time
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -127,9 +130,11 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into danmaku (member_id, video_id, danmaku_time, 
+    insert into danmaku (member_id, author, video_id, 
+      type, color, danmaku_time, 
       create_time, content)
-    values (#{memberId,jdbcType=BIGINT}, #{videoId,jdbcType=BIGINT}, #{danmakuTime,jdbcType=VARCHAR}, 
+    values (#{memberId,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, #{videoId,jdbcType=BIGINT}, 
+      #{type,jdbcType=INTEGER}, #{color,jdbcType=CHAR}, #{danmakuTime,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chunlei.bili.danmaku.model.Danmaku">
@@ -141,8 +146,17 @@
       <if test="memberId != null">
         member_id,
       </if>
+      <if test="author != null">
+        author,
+      </if>
       <if test="videoId != null">
         video_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="color != null">
+        color,
       </if>
       <if test="danmakuTime != null">
         danmaku_time,
@@ -158,8 +172,17 @@
       <if test="memberId != null">
         #{memberId,jdbcType=BIGINT},
       </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
       <if test="videoId != null">
         #{videoId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=CHAR},
       </if>
       <if test="danmakuTime != null">
         #{danmakuTime,jdbcType=VARCHAR},
@@ -187,8 +210,17 @@
       <if test="row.memberId != null">
         member_id = #{row.memberId,jdbcType=BIGINT},
       </if>
+      <if test="row.author != null">
+        author = #{row.author,jdbcType=VARCHAR},
+      </if>
       <if test="row.videoId != null">
         video_id = #{row.videoId,jdbcType=BIGINT},
+      </if>
+      <if test="row.type != null">
+        type = #{row.type,jdbcType=INTEGER},
+      </if>
+      <if test="row.color != null">
+        color = #{row.color,jdbcType=CHAR},
       </if>
       <if test="row.danmakuTime != null">
         danmaku_time = #{row.danmakuTime,jdbcType=VARCHAR},
@@ -208,7 +240,10 @@
     update danmaku
     set id = #{row.id,jdbcType=BIGINT},
       member_id = #{row.memberId,jdbcType=BIGINT},
+      author = #{row.author,jdbcType=VARCHAR},
       video_id = #{row.videoId,jdbcType=BIGINT},
+      type = #{row.type,jdbcType=INTEGER},
+      color = #{row.color,jdbcType=CHAR},
       danmaku_time = #{row.danmakuTime,jdbcType=VARCHAR},
       create_time = #{row.createTime,jdbcType=TIMESTAMP},
       content = #{row.content,jdbcType=LONGVARCHAR}
@@ -220,7 +255,10 @@
     update danmaku
     set id = #{row.id,jdbcType=BIGINT},
       member_id = #{row.memberId,jdbcType=BIGINT},
+      author = #{row.author,jdbcType=VARCHAR},
       video_id = #{row.videoId,jdbcType=BIGINT},
+      type = #{row.type,jdbcType=INTEGER},
+      color = #{row.color,jdbcType=CHAR},
       danmaku_time = #{row.danmakuTime,jdbcType=VARCHAR},
       create_time = #{row.createTime,jdbcType=TIMESTAMP}
     <if test="example != null">
@@ -233,8 +271,17 @@
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=BIGINT},
       </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
       <if test="videoId != null">
         video_id = #{videoId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=CHAR},
       </if>
       <if test="danmakuTime != null">
         danmaku_time = #{danmakuTime,jdbcType=VARCHAR},
@@ -251,7 +298,10 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chunlei.bili.danmaku.model.Danmaku">
     update danmaku
     set member_id = #{memberId,jdbcType=BIGINT},
+      author = #{author,jdbcType=VARCHAR},
       video_id = #{videoId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      color = #{color,jdbcType=CHAR},
       danmaku_time = #{danmakuTime,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
@@ -260,7 +310,10 @@
   <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.danmaku.model.Danmaku">
     update danmaku
     set member_id = #{memberId,jdbcType=BIGINT},
+      author = #{author,jdbcType=VARCHAR},
       video_id = #{videoId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      color = #{color,jdbcType=CHAR},
       danmaku_time = #{danmakuTime,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

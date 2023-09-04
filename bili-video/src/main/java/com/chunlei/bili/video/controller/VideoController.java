@@ -50,6 +50,14 @@ public class VideoController {
 
         return videoService.publish(videoId);
     }
+    
+    @PostMapping("/publish/all")
+    public R publishAll(){
+        for (int i = 1; i < 396; i++) {
+            videoService.publish((long) i);
+        }
+        return R.success(null);
+    }
 
     @GetMapping("/info/{videoId}")
     public R getVideoInfo(@PathVariable("videoId") Long videoId){

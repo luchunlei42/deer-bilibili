@@ -225,62 +225,62 @@ public class VideoStatExample {
         }
 
         public Criteria andViewIsNull() {
-            addCriterion("view is null");
+            addCriterion("`view` is null");
             return (Criteria) this;
         }
 
         public Criteria andViewIsNotNull() {
-            addCriterion("view is not null");
+            addCriterion("`view` is not null");
             return (Criteria) this;
         }
 
         public Criteria andViewEqualTo(Long value) {
-            addCriterion("view =", value, "view");
+            addCriterion("`view` =", value, "view");
             return (Criteria) this;
         }
 
         public Criteria andViewNotEqualTo(Long value) {
-            addCriterion("view <>", value, "view");
+            addCriterion("`view` <>", value, "view");
             return (Criteria) this;
         }
 
         public Criteria andViewGreaterThan(Long value) {
-            addCriterion("view >", value, "view");
+            addCriterion("`view` >", value, "view");
             return (Criteria) this;
         }
 
         public Criteria andViewGreaterThanOrEqualTo(Long value) {
-            addCriterion("view >=", value, "view");
+            addCriterion("`view` >=", value, "view");
             return (Criteria) this;
         }
 
         public Criteria andViewLessThan(Long value) {
-            addCriterion("view <", value, "view");
+            addCriterion("`view` <", value, "view");
             return (Criteria) this;
         }
 
         public Criteria andViewLessThanOrEqualTo(Long value) {
-            addCriterion("view <=", value, "view");
+            addCriterion("`view` <=", value, "view");
             return (Criteria) this;
         }
 
         public Criteria andViewIn(List<Long> values) {
-            addCriterion("view in", values, "view");
+            addCriterion("`view` in", values, "view");
             return (Criteria) this;
         }
 
         public Criteria andViewNotIn(List<Long> values) {
-            addCriterion("view not in", values, "view");
+            addCriterion("`view` not in", values, "view");
             return (Criteria) this;
         }
 
         public Criteria andViewBetween(Long value1, Long value2) {
-            addCriterion("view between", value1, value2, "view");
+            addCriterion("`view` between", value1, value2, "view");
             return (Criteria) this;
         }
 
         public Criteria andViewNotBetween(Long value1, Long value2) {
-            addCriterion("view not between", value1, value2, "view");
+            addCriterion("`view` not between", value1, value2, "view");
             return (Criteria) this;
         }
 
@@ -465,62 +465,62 @@ public class VideoStatExample {
         }
 
         public Criteria andLikeIsNull() {
-            addCriterion("like is null");
+            addCriterion("`like` is null");
             return (Criteria) this;
         }
 
         public Criteria andLikeIsNotNull() {
-            addCriterion("like is not null");
+            addCriterion("`like` is not null");
             return (Criteria) this;
         }
 
         public Criteria andLikeEqualTo(Long value) {
-            addCriterion("like =", value, "like");
+            addCriterion("`like` =", value, "like");
             return (Criteria) this;
         }
 
         public Criteria andLikeNotEqualTo(Long value) {
-            addCriterion("like <>", value, "like");
+            addCriterion("`like` <>", value, "like");
             return (Criteria) this;
         }
 
         public Criteria andLikeGreaterThan(Long value) {
-            addCriterion("like >", value, "like");
+            addCriterion("`like` >", value, "like");
             return (Criteria) this;
         }
 
         public Criteria andLikeGreaterThanOrEqualTo(Long value) {
-            addCriterion("like >=", value, "like");
+            addCriterion("`like` >=", value, "like");
             return (Criteria) this;
         }
 
         public Criteria andLikeLessThan(Long value) {
-            addCriterion("like <", value, "like");
+            addCriterion("`like` <", value, "like");
             return (Criteria) this;
         }
 
         public Criteria andLikeLessThanOrEqualTo(Long value) {
-            addCriterion("like <=", value, "like");
+            addCriterion("`like` <=", value, "like");
             return (Criteria) this;
         }
 
         public Criteria andLikeIn(List<Long> values) {
-            addCriterion("like in", values, "like");
+            addCriterion("`like` in", values, "like");
             return (Criteria) this;
         }
 
         public Criteria andLikeNotIn(List<Long> values) {
-            addCriterion("like not in", values, "like");
+            addCriterion("`like` not in", values, "like");
             return (Criteria) this;
         }
 
         public Criteria andLikeBetween(Long value1, Long value2) {
-            addCriterion("like between", value1, value2, "like");
+            addCriterion("`like` between", value1, value2, "like");
             return (Criteria) this;
         }
 
         public Criteria andLikeNotBetween(Long value1, Long value2) {
-            addCriterion("like not between", value1, value2, "like");
+            addCriterion("`like` not between", value1, value2, "like");
             return (Criteria) this;
         }
     }

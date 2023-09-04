@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DanmakuServiceImpl implements DanmakuService {
@@ -60,5 +62,28 @@ public class DanmakuServiceImpl implements DanmakuService {
             redisTemplate.opsForValue().set(key, JSONObject.toJSONString(list),DANMAKU_EXPIRE);
         }
         return (long) list.size();
+    }
+
+    @Override
+    public List<Object[]> getDanmaku(Long vid) {
+        DanmakuExample danmakuExample = new DanmakuExample();
+        danmakuExample.createCriteria().andVideoIdEqualTo(vid);
+        String key = DANMAKU_PREFIX + vid;
+        String value = redisTemplate.opsForValue().get(key);
+        List<Danmaku> danmakus;
+        if (!StrUtil.isEmpty(value)){
+            danmakus = JSONArray.parseArray(value, Danmaku.class);
+        }else {
+            danmakus = danmakuMapper.selectByExample(danmakuExample);
+            redisTemplate.opsForValue().set(key, JSONObject.toJSONString(danmakus),DANMAKU_EXPIRE);
+        }
+        List<Object[]> res = new ArrayList<>();
+        if (danmakus != null && !danmakus.isEmpty()){
+            res = danmakus.stream().map(danmaku -> {
+                Object[] list= new Object[]{new BigDecimal(danmaku.getDanmakuTime()),"right",danmaku.getColor(),danmaku.getAuthor(),danmaku.getContent()};
+                return list;
+            }).collect(Collectors.toList());
+        }
+        return res;
     }
 }

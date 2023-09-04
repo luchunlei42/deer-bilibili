@@ -75,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_id, video_title, video_description, img_url, catalog_id, type, scheduled, 
+    id, member_id, video_title, video_description, img_url, catalog_id, `type`, scheduled, 
     weight, publish_status, create_time, update_time, duration
   </sql>
   <select id="selectByExample" parameterType="com.chunlei.bili.video.model.VideoExample" resultMap="BaseResultMap">
@@ -84,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from video
+    from `video`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,15 +95,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from video
+    from `video`
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from video
+    delete from `video`
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.chunlei.bili.video.model.VideoExample">
-    delete from video
+    delete from `video`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -112,8 +112,8 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into video (member_id, video_title, video_description, 
-      img_url, catalog_id, type, 
+    insert into `video` (member_id, video_title, video_description, 
+      img_url, catalog_id, `type`, 
       scheduled, weight, publish_status, 
       create_time, update_time, duration
       )
@@ -127,7 +127,7 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into video
+    insert into `video`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
         member_id,
@@ -145,7 +145,7 @@
         catalog_id,
       </if>
       <if test="type != null">
-        type,
+        `type`,
       </if>
       <if test="scheduled != null">
         scheduled,
@@ -206,13 +206,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.chunlei.bili.video.model.VideoExample" resultType="java.lang.Long">
-    select count(*) from video
+    select count(*) from `video`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update video
+    update `video`
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=BIGINT},
@@ -233,7 +233,7 @@
         catalog_id = #{row.catalogId,jdbcType=BIGINT},
       </if>
       <if test="row.type != null">
-        type = #{row.type,jdbcType=INTEGER},
+        `type` = #{row.type,jdbcType=INTEGER},
       </if>
       <if test="row.scheduled != null">
         scheduled = #{row.scheduled,jdbcType=INTEGER},
@@ -259,14 +259,14 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update video
+    update `video`
     set id = #{row.id,jdbcType=BIGINT},
       member_id = #{row.memberId,jdbcType=BIGINT},
       video_title = #{row.videoTitle,jdbcType=VARCHAR},
       video_description = #{row.videoDescription,jdbcType=VARCHAR},
       img_url = #{row.imgUrl,jdbcType=VARCHAR},
       catalog_id = #{row.catalogId,jdbcType=BIGINT},
-      type = #{row.type,jdbcType=INTEGER},
+      `type` = #{row.type,jdbcType=INTEGER},
       scheduled = #{row.scheduled,jdbcType=INTEGER},
       weight = #{row.weight,jdbcType=DECIMAL},
       publish_status = #{row.publishStatus,jdbcType=TINYINT},
@@ -278,7 +278,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunlei.bili.video.model.Video">
-    update video
+    update `video`
     <set>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=BIGINT},
@@ -296,7 +296,7 @@
         catalog_id = #{catalogId,jdbcType=BIGINT},
       </if>
       <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
+        `type` = #{type,jdbcType=INTEGER},
       </if>
       <if test="scheduled != null">
         scheduled = #{scheduled,jdbcType=INTEGER},
@@ -320,13 +320,13 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.video.model.Video">
-    update video
+    update `video`
     set member_id = #{memberId,jdbcType=BIGINT},
       video_title = #{videoTitle,jdbcType=VARCHAR},
       video_description = #{videoDescription,jdbcType=VARCHAR},
       img_url = #{imgUrl,jdbcType=VARCHAR},
       catalog_id = #{catalogId,jdbcType=BIGINT},
-      type = #{type,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=INTEGER},
       scheduled = #{scheduled,jdbcType=INTEGER},
       weight = #{weight,jdbcType=DECIMAL},
       publish_status = #{publishStatus,jdbcType=TINYINT},

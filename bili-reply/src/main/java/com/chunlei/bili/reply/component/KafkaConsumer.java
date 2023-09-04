@@ -19,6 +19,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +36,7 @@ public class KafkaConsumer {
     VideoFeignClient videoFeignClient;
 
     @KafkaListener(topics = {KafkaConfig.REPLY_TOPIC})
+    @Transactional
     public void consumeReplyMessageBatch(List<ConsumerRecord<String,String>> consumerRecords, Acknowledgment ack){
         Map<Long, Long> replyIncrementCountMap = new HashMap<>();
         Map<Long, List<Pair<String,Double>>> videoToReplyMap = new HashMap<>();
@@ -47,9 +49,6 @@ public class KafkaConsumer {
                 Long videoId = reply.getVideoId();
                 Long orDefault = replyIncrementCountMap.getOrDefault(videoId, 0L);
                 replyIncrementCountMap.put(videoId,orDefault+1);
-                if (reply.getRootId() == 0){
-                    videoToReplyMap.computeIfAbsent(videoId,v->new ArrayList<>()).add(Pair.of(reply.getId().toString(), (double) reply.getCreateTime().getTime()));
-                }
                 //TODO:更新用户的数据，子评论数，根评论数
                 ack.acknowledge();
             }catch (Exception e){
@@ -59,6 +58,11 @@ public class KafkaConsumer {
         }
         //评论,评论数插入db
         replyDao.insertBatch(replyList);
+        replyList.forEach(reply -> {
+            if (reply.getRootId() == 0){
+                videoToReplyMap.computeIfAbsent(reply.getVideoId(),v->new ArrayList<>()).add(Pair.of(reply.getId().toString(), (double) reply.getCreateTime().getTime()));
+            }
+        });
         videoFeignClient.incrementReplyCount(replyIncrementCountMap);
         videoToReplyMap.forEach((k,v)->{
             Long videoId = k;

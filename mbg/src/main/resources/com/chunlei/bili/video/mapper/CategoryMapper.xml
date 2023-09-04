@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    cat_id, name, code, parent_cid, cat_level, show_status, sort, icon
+    cat_id, `name`, code, parent_cid, cat_level, show_status, sort, icon
   </sql>
   <select id="selectByExample" parameterType="com.chunlei.bili.video.model.CategoryExample" resultMap="BaseResultMap">
     select
@@ -78,7 +78,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from category
+    from `category`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,21 +89,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from category
+    from `category`
     where cat_id = #{catId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from category
+    delete from `category`
     where cat_id = #{catId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.chunlei.bili.video.model.CategoryExample">
-    delete from category
+    delete from `category`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.chunlei.bili.video.model.Category">
-    insert into category (cat_id, name, code, parent_cid, 
+    insert into `category` (cat_id, `name`, code, parent_cid, 
       cat_level, show_status, sort, 
       icon)
     values (#{catId,jdbcType=BIGINT}, #{name,jdbcType=CHAR}, #{code,jdbcType=CHAR}, #{parentCid,jdbcType=BIGINT}, 
@@ -111,13 +111,13 @@
       #{icon,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.chunlei.bili.video.model.Category">
-    insert into category
+    insert into `category`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="catId != null">
         cat_id,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="code != null">
         code,
@@ -166,19 +166,19 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.chunlei.bili.video.model.CategoryExample" resultType="java.lang.Long">
-    select count(*) from category
+    select count(*) from `category`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update category
+    update `category`
     <set>
       <if test="row.catId != null">
         cat_id = #{row.catId,jdbcType=BIGINT},
       </if>
       <if test="row.name != null">
-        name = #{row.name,jdbcType=CHAR},
+        `name` = #{row.name,jdbcType=CHAR},
       </if>
       <if test="row.code != null">
         code = #{row.code,jdbcType=CHAR},
@@ -204,9 +204,9 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update category
+    update `category`
     set cat_id = #{row.catId,jdbcType=BIGINT},
-      name = #{row.name,jdbcType=CHAR},
+      `name` = #{row.name,jdbcType=CHAR},
       code = #{row.code,jdbcType=CHAR},
       parent_cid = #{row.parentCid,jdbcType=BIGINT},
       cat_level = #{row.catLevel,jdbcType=INTEGER},
@@ -218,10 +218,10 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunlei.bili.video.model.Category">
-    update category
+    update `category`
     <set>
       <if test="name != null">
-        name = #{name,jdbcType=CHAR},
+        `name` = #{name,jdbcType=CHAR},
       </if>
       <if test="code != null">
         code = #{code,jdbcType=CHAR},
@@ -245,8 +245,8 @@
     where cat_id = #{catId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.video.model.Category">
-    update category
-    set name = #{name,jdbcType=CHAR},
+    update `category`
+    set `name` = #{name,jdbcType=CHAR},
       code = #{code,jdbcType=CHAR},
       parent_cid = #{parentCid,jdbcType=BIGINT},
       cat_level = #{catLevel,jdbcType=INTEGER},

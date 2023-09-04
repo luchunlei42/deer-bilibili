@@ -25,7 +25,7 @@ public class RedisConstants {
     public static final Long USER_FAMOUS_TTL = 20L;
 
     public static final String VIDEO_VIEW = "video:view:";
-    public static final String REPLY_COUNT = "video:replycount";
+    public static final String REPLY_COUNT = "video:replycount:";
 
     public static final Integer REPLY_COUNT_TTL = 2;
 }

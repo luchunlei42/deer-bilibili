@@ -1,5 +1,6 @@
 package com.chunlei.bili.search.service;
 
+import com.chunlei.bili.search.dto.FeedEntity;
 import com.chunlei.bili.search.dto.PublishDTO;
 import com.chunlei.bili.search.dto.VideoDTO;
 import com.chunlei.bili.search.dto.VideoEntity;
@@ -19,4 +20,8 @@ public interface EsSearchService {
     List<VideoDTO> findVideoByIds(List<Long> videoIdList) throws ExecutionException, InterruptedException;
 
     VideoEntity getVideoEntity(Long videoId) throws ExecutionException, InterruptedException;
+
+    FeedEntity feed(Integer ps, Long timestamp, Long last) throws IOException, ExecutionException, InterruptedException;
+
+    List<VideoDTO> searchByKeyword(String keyword, String type, Integer page) throws IOException, ExecutionException, InterruptedException;
 }

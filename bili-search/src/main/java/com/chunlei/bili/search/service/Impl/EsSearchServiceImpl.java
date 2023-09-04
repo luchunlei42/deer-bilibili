@@ -7,10 +7,7 @@ import com.chunlei.bili.common.api.R;
 import com.chunlei.bili.search.client.DanmakuFeignClient;
 import com.chunlei.bili.search.client.MemberFeignClient;
 import com.chunlei.bili.search.client.VideoFeignClient;
-import com.chunlei.bili.search.dto.MemberInfo;
-import com.chunlei.bili.search.dto.PublishDTO;
-import com.chunlei.bili.search.dto.VideoDTO;
-import com.chunlei.bili.search.dto.VideoEntity;
+import com.chunlei.bili.search.dto.*;
 import com.chunlei.bili.search.entity.EsMember;
 import com.chunlei.bili.search.entity.EsVideo;
 import com.chunlei.bili.search.repository.EsMemberRepository;
@@ -26,10 +23,14 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -128,6 +129,65 @@ public class EsSearchServiceImpl implements EsSearchService {
         EsVideo esVideo = list.get(0);
         video = mappingEsVideoToVideoEntity(esVideo);
         return video;
+    }
+
+    @Override
+    public FeedEntity feed(Integer ps, Long timestamp, Long last) throws IOException, ExecutionException, InterruptedException {
+        FeedEntity feedEntity = new FeedEntity();
+        List<EsVideo> res = new ArrayList<>();
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.from(0);
+        searchSourceBuilder.size(ps);
+        FieldSortBuilder pubdate = SortBuilders.fieldSort("pubdate").order(SortOrder.DESC);
+        FieldSortBuilder vid = SortBuilders.fieldSort("vid");
+        searchSourceBuilder.sort(pubdate).sort(vid);
+        if (timestamp != null || last != null){
+            searchSourceBuilder.searchAfter(new Object[]{timestamp,last});
+        }
+        SearchRequest searchRequest = new SearchRequest(VIDEO_INDEX);
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHits hits = response.getHits();
+        SearchHit[] searchHits = hits.getHits();
+        for (int i = 0; i < searchHits.length; i++) {
+            SearchHit hit = searchHits[i];
+            String sourceAsString = hit.getSourceAsString();
+            EsVideo video = JSON.parseObject(sourceAsString, EsVideo.class);
+            res.add(video);
+            if (i == searchHits.length-1){
+                feedEntity.setLast(video.getVid());
+                feedEntity.setTimestamp(video.getPubDate().getTime());
+            }
+        }
+        List<VideoDTO> videoDTOList = mappingEsVideoToVideoDTO(res);
+        feedEntity.setVideos(videoDTOList);
+        return feedEntity;
+    }
+
+    @Override
+    public List<VideoDTO> searchByKeyword(String keyword, String type, Integer page) throws IOException, ExecutionException, InterruptedException {
+        int ps = 20;
+        List<EsVideo> res = new ArrayList<>();
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        MultiMatchQueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(keyword, "title", "tags", "typename");
+
+        searchSourceBuilder.query(queryBuilder);
+        searchSourceBuilder.from((page-1)*ps);
+        searchSourceBuilder.size(ps);
+
+        SearchRequest searchRequest = new SearchRequest(VIDEO_INDEX);
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHits hits = response.getHits();
+        SearchHit[] searchHits = hits.getHits();
+        for (SearchHit hit : searchHits){
+            String sourceAsString = hit.getSourceAsString();
+            EsVideo video = JSON.parseObject(sourceAsString, EsVideo.class);
+            res.add(video);
+        }
+        List<VideoDTO> videoDTOList = mappingEsVideoToVideoDTO(res);
+        return videoDTOList;
     }
 
     private VideoEntity mappingEsVideoToVideoEntity(EsVideo esVideo) {

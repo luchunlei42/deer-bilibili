@@ -74,7 +74,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from video_tag_relation
+    from `video_tag_relation`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,15 +85,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from video_tag_relation
+    from `video_tag_relation`
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from video_tag_relation
+    delete from `video_tag_relation`
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.chunlei.bili.video.model.VideoTagRelationExample">
-    delete from video_tag_relation
+    delete from `video_tag_relation`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,7 +102,7 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into video_tag_relation (tag_id, video_id, tag_name
+    insert into `video_tag_relation` (tag_id, video_id, tag_name
       )
     values (#{tagId,jdbcType=BIGINT}, #{videoId,jdbcType=BIGINT}, #{tagName,jdbcType=VARCHAR}
       )
@@ -111,7 +111,7 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into video_tag_relation
+    insert into `video_tag_relation`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="tagId != null">
         tag_id,
@@ -136,13 +136,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.chunlei.bili.video.model.VideoTagRelationExample" resultType="java.lang.Long">
-    select count(*) from video_tag_relation
+    select count(*) from `video_tag_relation`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update video_tag_relation
+    update `video_tag_relation`
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=BIGINT},
@@ -162,7 +162,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update video_tag_relation
+    update `video_tag_relation`
     set id = #{row.id,jdbcType=BIGINT},
       tag_id = #{row.tagId,jdbcType=BIGINT},
       video_id = #{row.videoId,jdbcType=BIGINT},
@@ -172,7 +172,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunlei.bili.video.model.VideoTagRelation">
-    update video_tag_relation
+    update `video_tag_relation`
     <set>
       <if test="tagId != null">
         tag_id = #{tagId,jdbcType=BIGINT},
@@ -187,7 +187,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.video.model.VideoTagRelation">
-    update video_tag_relation
+    update `video_tag_relation`
     set tag_id = #{tagId,jdbcType=BIGINT},
       video_id = #{videoId,jdbcType=BIGINT},
       tag_name = #{tagName,jdbcType=VARCHAR}

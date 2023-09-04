@@ -90,6 +90,8 @@ public class VideoServiceImpl implements VideoService {
     FFmpeg fFmpeg;
     @Autowired
     FFprobe fFprobe;
+    @Autowired
+    VideoStatMapper videoStatMapper;
 
     @Override
     @Transactional
@@ -204,8 +206,21 @@ public class VideoServiceImpl implements VideoService {
 
         publishDTO.setMember(memberDTO);
 
-        //TODO:获取播放量，弹幕量，收藏等等
-
+        //创建video_stat表
+        VideoStat videoStat = new VideoStat();
+        videoStat.setVideoId(videoId);
+        VideoStatExample videoStatExample = new VideoStatExample();
+        videoStatExample.createCriteria().andVideoIdEqualTo(videoId);
+        Long l = videoStatMapper.countByExample(videoStatExample);
+        if (l > 0){
+        }else {
+            videoStat.setLike(0L);
+            videoStat.setReply(0L);
+            videoStat.setView(0L);
+            videoStat.setDanmaku(0L);
+            videoStat.setFavorite(0L);
+            videoStatMapper.insertSelective(videoStat);
+        }
         return searchFeignClient.publishVideo(publishDTO);
     }
 

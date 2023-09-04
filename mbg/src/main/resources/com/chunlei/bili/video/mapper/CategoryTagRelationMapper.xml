@@ -75,7 +75,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from category_tag_relation
+    from `category_tag_relation`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,15 +86,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from category_tag_relation
+    from `category_tag_relation`
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from category_tag_relation
+    delete from `category_tag_relation`
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.chunlei.bili.video.model.CategoryTagRelationExample">
-    delete from category_tag_relation
+    delete from `category_tag_relation`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,7 +103,7 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into category_tag_relation (tag_id, catelog_id, tag_name, 
+    insert into `category_tag_relation` (tag_id, catelog_id, tag_name, 
       catelog_name)
     values (#{tagId,jdbcType=BIGINT}, #{catelogId,jdbcType=BIGINT}, #{tagName,jdbcType=VARCHAR}, 
       #{catelogName,jdbcType=VARCHAR})
@@ -112,7 +112,7 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into category_tag_relation
+    insert into `category_tag_relation`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="tagId != null">
         tag_id,
@@ -143,13 +143,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.chunlei.bili.video.model.CategoryTagRelationExample" resultType="java.lang.Long">
-    select count(*) from category_tag_relation
+    select count(*) from `category_tag_relation`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update category_tag_relation
+    update `category_tag_relation`
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=BIGINT},
@@ -172,7 +172,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update category_tag_relation
+    update `category_tag_relation`
     set id = #{row.id,jdbcType=BIGINT},
       tag_id = #{row.tagId,jdbcType=BIGINT},
       catelog_id = #{row.catelogId,jdbcType=BIGINT},
@@ -183,7 +183,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunlei.bili.video.model.CategoryTagRelation">
-    update category_tag_relation
+    update `category_tag_relation`
     <set>
       <if test="tagId != null">
         tag_id = #{tagId,jdbcType=BIGINT},
@@ -201,7 +201,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.video.model.CategoryTagRelation">
-    update category_tag_relation
+    update `category_tag_relation`
     set tag_id = #{tagId,jdbcType=BIGINT},
       catelog_id = #{catelogId,jdbcType=BIGINT},
       tag_name = #{tagName,jdbcType=VARCHAR},

@@ -295,72 +295,72 @@ public class VideoDetailExample {
         }
 
         public Criteria andLocationIsNull() {
-            addCriterion("location is null");
+            addCriterion("`location` is null");
             return (Criteria) this;
         }
 
         public Criteria andLocationIsNotNull() {
-            addCriterion("location is not null");
+            addCriterion("`location` is not null");
             return (Criteria) this;
         }
 
         public Criteria andLocationEqualTo(String value) {
-            addCriterion("location =", value, "location");
+            addCriterion("`location` =", value, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationNotEqualTo(String value) {
-            addCriterion("location <>", value, "location");
+            addCriterion("`location` <>", value, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationGreaterThan(String value) {
-            addCriterion("location >", value, "location");
+            addCriterion("`location` >", value, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationGreaterThanOrEqualTo(String value) {
-            addCriterion("location >=", value, "location");
+            addCriterion("`location` >=", value, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationLessThan(String value) {
-            addCriterion("location <", value, "location");
+            addCriterion("`location` <", value, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationLessThanOrEqualTo(String value) {
-            addCriterion("location <=", value, "location");
+            addCriterion("`location` <=", value, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationLike(String value) {
-            addCriterion("location like", value, "location");
+            addCriterion("`location` like", value, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationNotLike(String value) {
-            addCriterion("location not like", value, "location");
+            addCriterion("`location` not like", value, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationIn(List<String> values) {
-            addCriterion("location in", values, "location");
+            addCriterion("`location` in", values, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationNotIn(List<String> values) {
-            addCriterion("location not in", values, "location");
+            addCriterion("`location` not in", values, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationBetween(String value1, String value2) {
-            addCriterion("location between", value1, value2, "location");
+            addCriterion("`location` between", value1, value2, "location");
             return (Criteria) this;
         }
 
         public Criteria andLocationNotBetween(String value1, String value2) {
-            addCriterion("location not between", value1, value2, "location");
+            addCriterion("`location` not between", value1, value2, "location");
             return (Criteria) this;
         }
 

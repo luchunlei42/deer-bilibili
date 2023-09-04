@@ -92,7 +92,7 @@ public class ReplyServiceImpl implements ReplyService {
             replyResult.setSize(ps);
             replyResult.setNum(pn);
             Set<String> range = redisTemplate.opsForZSet().range(replyIndexKey, next + 1, cursor);
-            if (range == null || range.size() > 0){
+            if (range == null || range.size() < 0){
                 return replyResult;
             }
 
@@ -126,8 +126,10 @@ public class ReplyServiceImpl implements ReplyService {
                 res.add(replyDTO);
             }
         }
-        List<ReplyDTO> replyDTOList = loadRepliesFromDB(missedIds);
-        res.addAll(replyDTOList);
+        if (!missedIds.isEmpty()){
+            List<ReplyDTO> replyDTOList = loadRepliesFromDB(missedIds);
+            res.addAll(replyDTOList);
+        }
         res.sort(Comparator.comparing(ReplyDTO::getTime).reversed());
         return res;
     }
@@ -177,6 +179,7 @@ public class ReplyServiceImpl implements ReplyService {
         saveRedisReplyIndexSortedByTime(replyDTOList);
         //4.重建评论列表
         rebuildReplyListCache(videoId);
+
         return replyResult;
     }
 
@@ -186,6 +189,9 @@ public class ReplyServiceImpl implements ReplyService {
      */
     private void rebuildReplyListCache(Long videoId) {
         List<Reply> replyList = replyDao.getRootRepliesWithTime(videoId);
+        if (replyList == null || replyList.isEmpty()){
+            return;
+        }
         Set<ZSetOperations.TypedTuple<String>> collect = replyList.stream().map(reply -> {
             ZSetOperations.TypedTuple<String> tuple = new DefaultTypedTuple<>(reply.getId().toString(), (double) reply.getCreateTime().getTime());
             return tuple;
@@ -229,6 +235,10 @@ public class ReplyServiceImpl implements ReplyService {
     private CompletableFuture<ReplyDTO> getReplyDTOFuture(Reply reply){
         CompletableFuture<ReplyDTO> replyDTOCompletableFuture = CompletableFuture.supplyAsync(() -> {
             ReplyDTO replyDTO = new ReplyDTO();
+            replyDTO.setVid(reply.getVideoId());
+            replyDTO.setRpid(reply.getId());
+            replyDTO.setContent(reply.getContent());
+            replyDTO.setTime(reply.getUpdateTime());
             ReplyExample replyExampleForChild = new ReplyExample();
             replyExampleForChild.createCriteria().andRootIdEqualTo(reply.getId()).andStatusEqualTo(2);
             PageHelper.startPage(1, 3);

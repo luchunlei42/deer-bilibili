@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    tag_id, name, show_status, first_letter, sort
+    tag_id, `name`, show_status, first_letter, sort
   </sql>
   <sql id="Blob_Column_List">
     descript
@@ -83,7 +83,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from tag
+    from `tag`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,7 +97,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tag
+    from `tag`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -110,21 +110,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from tag
+    from `tag`
     where tag_id = #{tagId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tag
+    delete from `tag`
     where tag_id = #{tagId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.chunlei.bili.video.model.TagExample">
-    delete from tag
+    delete from `tag`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.chunlei.bili.video.model.Tag">
-    insert into tag (tag_id, name, show_status, 
+    insert into `tag` (tag_id, `name`, show_status, 
       first_letter, sort, descript
       )
     values (#{tagId,jdbcType=BIGINT}, #{name,jdbcType=CHAR}, #{showStatus,jdbcType=TINYINT}, 
@@ -132,13 +132,13 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.chunlei.bili.video.model.Tag">
-    insert into tag
+    insert into `tag`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="tagId != null">
         tag_id,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="showStatus != null">
         show_status,
@@ -175,19 +175,19 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.chunlei.bili.video.model.TagExample" resultType="java.lang.Long">
-    select count(*) from tag
+    select count(*) from `tag`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tag
+    update `tag`
     <set>
       <if test="row.tagId != null">
         tag_id = #{row.tagId,jdbcType=BIGINT},
       </if>
       <if test="row.name != null">
-        name = #{row.name,jdbcType=CHAR},
+        `name` = #{row.name,jdbcType=CHAR},
       </if>
       <if test="row.showStatus != null">
         show_status = #{row.showStatus,jdbcType=TINYINT},
@@ -207,9 +207,9 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
-    update tag
+    update `tag`
     set tag_id = #{row.tagId,jdbcType=BIGINT},
-      name = #{row.name,jdbcType=CHAR},
+      `name` = #{row.name,jdbcType=CHAR},
       show_status = #{row.showStatus,jdbcType=TINYINT},
       first_letter = #{row.firstLetter,jdbcType=CHAR},
       sort = #{row.sort,jdbcType=INTEGER},
@@ -219,9 +219,9 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tag
+    update `tag`
     set tag_id = #{row.tagId,jdbcType=BIGINT},
-      name = #{row.name,jdbcType=CHAR},
+      `name` = #{row.name,jdbcType=CHAR},
       show_status = #{row.showStatus,jdbcType=TINYINT},
       first_letter = #{row.firstLetter,jdbcType=CHAR},
       sort = #{row.sort,jdbcType=INTEGER}
@@ -230,10 +230,10 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunlei.bili.video.model.Tag">
-    update tag
+    update `tag`
     <set>
       <if test="name != null">
-        name = #{name,jdbcType=CHAR},
+        `name` = #{name,jdbcType=CHAR},
       </if>
       <if test="showStatus != null">
         show_status = #{showStatus,jdbcType=TINYINT},
@@ -251,8 +251,8 @@
     where tag_id = #{tagId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chunlei.bili.video.model.Tag">
-    update tag
-    set name = #{name,jdbcType=CHAR},
+    update `tag`
+    set `name` = #{name,jdbcType=CHAR},
       show_status = #{showStatus,jdbcType=TINYINT},
       first_letter = #{firstLetter,jdbcType=CHAR},
       sort = #{sort,jdbcType=INTEGER},
@@ -260,8 +260,8 @@
     where tag_id = #{tagId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.video.model.Tag">
-    update tag
-    set name = #{name,jdbcType=CHAR},
+    update `tag`
+    set `name` = #{name,jdbcType=CHAR},
       show_status = #{showStatus,jdbcType=TINYINT},
       first_letter = #{firstLetter,jdbcType=CHAR},
       sort = #{sort,jdbcType=INTEGER}

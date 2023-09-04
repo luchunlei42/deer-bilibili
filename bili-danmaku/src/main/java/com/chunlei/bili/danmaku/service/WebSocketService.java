@@ -137,13 +137,7 @@ public class WebSocketService {
                     }
                 }
                 if (this.memberId != null){
-                    //保存弹幕到数据库
-                    Danmaku danmaku = JSON.parseObject(message,Danmaku.class);
-                    danmaku.setMemberId(memberId);
-                    danmaku.setCreateTime(new Date());
-                    DanmakuService danmakuService = (DanmakuService) APPLICATION_CONTEXT.getBean("danmakuService");
-                    danmakuService.addDanmaku(danmaku);
-                    danmakuService.addDanmakuToRedis(danmaku);
+                    //保存弹幕到数据库，无需在此处保存，有接口可以保存
                 }
             } catch (Exception e)
             {

@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, video_id, bucket_name, location, video_key
+    id, video_id, bucket_name, `location`, video_key
   </sql>
   <select id="selectByExample" parameterType="com.chunlei.bili.video.model.VideoDetailExample" resultMap="BaseResultMap">
     select
@@ -75,7 +75,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from video_detail
+    from `video_detail`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,15 +86,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from video_detail
+    from `video_detail`
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from video_detail
+    delete from `video_detail`
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.chunlei.bili.video.model.VideoDetailExample">
-    delete from video_detail
+    delete from `video_detail`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,7 +103,7 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into video_detail (video_id, bucket_name, location, 
+    insert into `video_detail` (video_id, bucket_name, `location`, 
       video_key)
     values (#{videoId,jdbcType=BIGINT}, #{bucketName,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
       #{videoKey,jdbcType=VARCHAR})
@@ -112,7 +112,7 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into video_detail
+    insert into `video_detail`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="videoId != null">
         video_id,
@@ -121,7 +121,7 @@
         bucket_name,
       </if>
       <if test="location != null">
-        location,
+        `location`,
       </if>
       <if test="videoKey != null">
         video_key,
@@ -143,13 +143,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.chunlei.bili.video.model.VideoDetailExample" resultType="java.lang.Long">
-    select count(*) from video_detail
+    select count(*) from `video_detail`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update video_detail
+    update `video_detail`
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=BIGINT},
@@ -161,7 +161,7 @@
         bucket_name = #{row.bucketName,jdbcType=VARCHAR},
       </if>
       <if test="row.location != null">
-        location = #{row.location,jdbcType=VARCHAR},
+        `location` = #{row.location,jdbcType=VARCHAR},
       </if>
       <if test="row.videoKey != null">
         video_key = #{row.videoKey,jdbcType=VARCHAR},
@@ -172,18 +172,18 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update video_detail
+    update `video_detail`
     set id = #{row.id,jdbcType=BIGINT},
       video_id = #{row.videoId,jdbcType=BIGINT},
       bucket_name = #{row.bucketName,jdbcType=VARCHAR},
-      location = #{row.location,jdbcType=VARCHAR},
+      `location` = #{row.location,jdbcType=VARCHAR},
       video_key = #{row.videoKey,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunlei.bili.video.model.VideoDetail">
-    update video_detail
+    update `video_detail`
     <set>
       <if test="videoId != null">
         video_id = #{videoId,jdbcType=BIGINT},
@@ -192,7 +192,7 @@
         bucket_name = #{bucketName,jdbcType=VARCHAR},
       </if>
       <if test="location != null">
-        location = #{location,jdbcType=VARCHAR},
+        `location` = #{location,jdbcType=VARCHAR},
       </if>
       <if test="videoKey != null">
         video_key = #{videoKey,jdbcType=VARCHAR},
@@ -201,10 +201,10 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chunlei.bili.video.model.VideoDetail">
-    update video_detail
+    update `video_detail`
     set video_id = #{videoId,jdbcType=BIGINT},
       bucket_name = #{bucketName,jdbcType=VARCHAR},
-      location = #{location,jdbcType=VARCHAR},
+      `location` = #{location,jdbcType=VARCHAR},
       video_key = #{videoKey,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>

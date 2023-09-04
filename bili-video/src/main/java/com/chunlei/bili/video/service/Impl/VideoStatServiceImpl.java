@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class VideoStatServiceImpl implements VideoStatService {
@@ -60,7 +61,8 @@ public class VideoStatServiceImpl implements VideoStatService {
             List<VideoStat> videoStatList = videoStatMapper.selectByExample(example);
             if (videoStatList != null && videoStatList.size()>0){
                 VideoStat videoStat = videoStatList.get(0);
-                redisTemplate.opsForValue().set(key,videoStat.getReply().toString(),RedisConstants.REPLY_COUNT_TTL*3600);
+                System.out.println("videoReply:"+videoStat.getReply().toString());
+                redisTemplate.opsForValue().set(key,videoStat.getReply().toString(),RedisConstants.REPLY_COUNT_TTL*3600, TimeUnit.SECONDS);
                 res = videoStat.getReply();
             } else {
                 //防止缓存穿透

@@ -44,6 +44,10 @@ spring:
           uri: lb://bili-reply
           predicates:
             - Path=/apix/reply/**
+        - id: danmaku-route
+          uri: lb://bili-danmaku
+          predicates:
+            - Path=/apix/danmaku/**
   application:
     name: bili-gateway
 server:
