@@ -1,0 +1,73 @@
+[2023-08-27T01:22:51.248-07:00] [WARN] [main-1] [com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [NacosPropertySourceBuilder.java,87,com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder,loadNacosData] [Ignore the empty nacos configuration and get it based on dataId[bili-search] & group[DEFAULT_GROUP]] ## ''
+[2023-08-27T01:22:51.253-07:00] [WARN] [main-1] [com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [NacosPropertySourceBuilder.java,87,com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder,loadNacosData] [Ignore the empty nacos configuration and get it based on dataId[bili-search.properties] & group[DEFAULT_GROUP]] ## ''
+[2023-08-27T01:22:55.346-07:00] [WARN] [main-1] [org.apache.mahout.cf.taste.impl.model.jdbc.AbstractJDBCDataModel] [ChunleiTuf] [10.18.10.84] [bili-search] [AbstractJDBCDataModel.java,193,org.apache.mahout.cf.taste.impl.model.jdbc.AbstractJDBCDataModel,<init>] [You are not using ConnectionPoolDataSource. Make sure your DataSource pools connections to the database itself, or database performance will be severely reduced.] ## ''
+[2023-08-27T01:22:55.927-07:00] [WARN] [main-1] [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] [ChunleiTuf] [10.18.10.84] [bili-search] [JpaBaseConfiguration.java,219,org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration,openEntityManagerInViewInterceptor] [spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning] ## ''
+[2023-08-27T01:22:59.633-07:00] [WARN] [main-1] [org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger] [ChunleiTuf] [10.18.10.84] [bili-search] [LoadBalancerCacheAutoConfiguration.java,83,org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger,logWarning] [Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.] ## ''
+[2023-08-27T02:57:19.080-07:00] [ERROR] [http-nio-8083-exec-6-121] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/apix/search].[dispatcherServlet]] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [DirectJDKLog.java,175,org.apache.juli.logging.DirectJDKLog,log] [Servlet.service() for servlet [dispatcherServlet] in context with path [/apix/search] threw exception [Request processing failed; nested exception is java.util.concurrent.CompletionException: feign.FeignException$InternalServerError: [500] during [GET] to [http://bili-video/apix/video/stat/396] [VideoFeignClient#getVideoStat(Long)]: [{"timestamp":"2023-08-27T09:57:19.001+00:00","status":500,"error":"Internal Server Error","path":"/apix/video/stat/396"}]] with root cause] ## ' feign.FeignException$InternalServerError: [500] during [GET] to [http://bili-video/apix/video/stat/396] [VideoFeignClient#getVideoStat(Long)]: [{"timestamp":"2023-08-27T09:57:19.001+00:00","status":500,"error":"Internal Server Error","path":"/apix/video/stat/396"}]
+	at feign.FeignException.serverErrorStatus(FeignException.java:250)
+	at feign.FeignException.errorStatus(FeignException.java:197)
+	at feign.FeignException.errorStatus(FeignException.java:185)
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:92)
+	at feign.AsyncResponseHandler.handleResponse(AsyncResponseHandler.java:98)
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:141)
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:91)
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:100)
+	at com.sun.proxy.$Proxy150.getVideoStat(Unknown Source)
+	at com.chunlei.bili.search.service.Impl.EsSearchServiceImpl.lambda$mappingEsVideoToVideoEntity$3(EsSearchServiceImpl.java:146)
+	at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1640)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+'
+[2023-08-27T02:57:25.410-07:00] [ERROR] [http-nio-8083-exec-8-123] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/apix/search].[dispatcherServlet]] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [DirectJDKLog.java,175,org.apache.juli.logging.DirectJDKLog,log] [Servlet.service() for servlet [dispatcherServlet] in context with path [/apix/search] threw exception [Request processing failed; nested exception is java.util.concurrent.CompletionException: feign.FeignException$InternalServerError: [500] during [GET] to [http://bili-video/apix/video/stat/396] [VideoFeignClient#getVideoStat(Long)]: [{"timestamp":"2023-08-27T09:57:25.408+00:00","status":500,"error":"Internal Server Error","path":"/apix/video/stat/396"}]] with root cause] ## ' feign.FeignException$InternalServerError: [500] during [GET] to [http://bili-video/apix/video/stat/396] [VideoFeignClient#getVideoStat(Long)]: [{"timestamp":"2023-08-27T09:57:25.408+00:00","status":500,"error":"Internal Server Error","path":"/apix/video/stat/396"}]
+	at feign.FeignException.serverErrorStatus(FeignException.java:250)
+	at feign.FeignException.errorStatus(FeignException.java:197)
+	at feign.FeignException.errorStatus(FeignException.java:185)
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:92)
+	at feign.AsyncResponseHandler.handleResponse(AsyncResponseHandler.java:98)
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:141)
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:91)
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:100)
+	at com.sun.proxy.$Proxy150.getVideoStat(Unknown Source)
+	at com.chunlei.bili.search.service.Impl.EsSearchServiceImpl.lambda$mappingEsVideoToVideoEntity$3(EsSearchServiceImpl.java:146)
+	at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1640)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+'
+[2023-08-27T03:07:22.278-07:00] [ERROR] [http-nio-8083-exec-1-116] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/apix/search].[dispatcherServlet]] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [DirectJDKLog.java,175,org.apache.juli.logging.DirectJDKLog,log] [Servlet.service() for servlet [dispatcherServlet] in context with path [/apix/search] threw exception [Request processing failed; nested exception is java.util.concurrent.CompletionException: feign.FeignException$InternalServerError: [500] during [GET] to [http://bili-video/apix/video/stat/396] [VideoFeignClient#getVideoStat(Long)]: [{"timestamp":"2023-08-27T10:07:22.272+00:00","status":500,"error":"Internal Server Error","path":"/apix/video/stat/396"}]] with root cause] ## ' feign.FeignException$InternalServerError: [500] during [GET] to [http://bili-video/apix/video/stat/396] [VideoFeignClient#getVideoStat(Long)]: [{"timestamp":"2023-08-27T10:07:22.272+00:00","status":500,"error":"Internal Server Error","path":"/apix/video/stat/396"}]
+	at feign.FeignException.serverErrorStatus(FeignException.java:250)
+	at feign.FeignException.errorStatus(FeignException.java:197)
+	at feign.FeignException.errorStatus(FeignException.java:185)
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:92)
+	at feign.AsyncResponseHandler.handleResponse(AsyncResponseHandler.java:98)
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:141)
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:91)
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:100)
+	at com.sun.proxy.$Proxy150.getVideoStat(Unknown Source)
+	at com.chunlei.bili.search.service.Impl.EsSearchServiceImpl.lambda$mappingEsVideoToVideoEntity$3(EsSearchServiceImpl.java:146)
+	at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1640)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+'
+[2023-08-27T03:12:10.164-07:00] [ERROR] [http-nio-8083-exec-4-119] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/apix/search].[dispatcherServlet]] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [DirectJDKLog.java,175,org.apache.juli.logging.DirectJDKLog,log] [Servlet.service() for servlet [dispatcherServlet] in context with path [/apix/search] threw exception [Request processing failed; nested exception is java.util.concurrent.CompletionException: feign.FeignException$InternalServerError: [500] during [GET] to [http://bili-video/apix/video/stat/396] [VideoFeignClient#getVideoStat(Long)]: [{"timestamp":"2023-08-27T10:12:10.160+00:00","status":500,"error":"Internal Server Error","path":"/apix/video/stat/396"}]] with root cause] ## ' feign.FeignException$InternalServerError: [500] during [GET] to [http://bili-video/apix/video/stat/396] [VideoFeignClient#getVideoStat(Long)]: [{"timestamp":"2023-08-27T10:12:10.160+00:00","status":500,"error":"Internal Server Error","path":"/apix/video/stat/396"}]
+	at feign.FeignException.serverErrorStatus(FeignException.java:250)
+	at feign.FeignException.errorStatus(FeignException.java:197)
+	at feign.FeignException.errorStatus(FeignException.java:185)
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:92)
+	at feign.AsyncResponseHandler.handleResponse(AsyncResponseHandler.java:98)
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:141)
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:91)
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:100)
+	at com.sun.proxy.$Proxy150.getVideoStat(Unknown Source)
+	at com.chunlei.bili.search.service.Impl.EsSearchServiceImpl.lambda$mappingEsVideoToVideoEntity$3(EsSearchServiceImpl.java:146)
+	at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1640)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+'
+[2023-08-27T04:10:35.724-07:00] [WARN] [Thread-6-35] [com.alibaba.nacos.common.http.HttpClientBeanHolder] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [HttpClientBeanHolder.java,102,com.alibaba.nacos.common.http.HttpClientBeanHolder,shutdown] [[HttpClientBeanHolder] Start destroying common HttpClient] ## ''
+[2023-08-27T04:10:35.727-07:00] [WARN] [Thread-14-46] [com.alibaba.nacos.common.notify.NotifyCenter] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [NotifyCenter.java,136,com.alibaba.nacos.common.notify.NotifyCenter,shutdown] [[NotifyCenter] Start destroying Publisher] ## ''
+[2023-08-27T04:10:35.728-07:00] [WARN] [Thread-14-46] [com.alibaba.nacos.common.notify.NotifyCenter] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [NotifyCenter.java,153,com.alibaba.nacos.common.notify.NotifyCenter,shutdown] [[NotifyCenter] Destruction of the end] ## ''
+[2023-08-27T04:10:35.736-07:00] [WARN] [Thread-6-35] [com.alibaba.nacos.common.http.HttpClientBeanHolder] [ChunleiTuf] [${ctx:ip}] [${ctx:applicationName}] [HttpClientBeanHolder.java,111,com.alibaba.nacos.common.http.HttpClientBeanHolder,shutdown] [[HttpClientBeanHolder] Destruction of the end] ## ''
