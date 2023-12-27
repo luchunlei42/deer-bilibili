@@ -1,0 +1,599 @@
+services:
+
+  zookeeper:
+
+    command:
+      - "zkServer.sh"
+      - "start-foreground"
+
+    container_name: "zookeeper"
+
+    entrypoint:
+      - "/docker-entrypoint.sh"
+
+    environment:
+      - "PATH=/usr/local/openjdk-11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/apache-zookeeper-3.7.0-bin/bin"
+      - "JAVA_HOME=/usr/local/openjdk-11"
+      - "LANG=C.UTF-8"
+      - "JAVA_VERSION=11.0.13"
+      - "ZOO_CONF_DIR=/conf"
+      - "ZOO_DATA_DIR=/data"
+      - "ZOO_DATA_LOG_DIR=/datalog"
+      - "ZOO_LOG_DIR=/logs"
+      - "ZOO_TICK_TIME=2000"
+      - "ZOO_INIT_LIMIT=5"
+      - "ZOO_SYNC_LIMIT=2"
+      - "ZOO_AUTOPURGE_PURGEINTERVAL=0"
+      - "ZOO_AUTOPURGE_SNAPRETAINCOUNT=3"
+      - "ZOO_MAX_CLIENT_CNXNS=60"
+      - "ZOO_STANDALONE_ENABLED=true"
+      - "ZOO_ADMINSERVER_ENABLED=true"
+      - "ZOOCFGDIR=/conf"
+
+    hostname: "8af0aadc4973"
+
+    image: "zookeeper"
+
+    ipc: "private"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:0c"
+
+    network_mode: "bridge"
+
+    ports:
+      - "2181:2181/tcp"
+
+    privileged: true
+
+    restart: "always"
+
+    security_opt:
+      - "label=disable"
+
+    volumes:
+      - "/mydata/zookeeper/conf:/conf"
+      - "/mydata/zookeeper/data:/data"
+      - "/mydata/zookeeper/logs:/datalog"
+      - "12dcb9b527e782a9a159a821f98dc51443839fd6904bfbee19bfb43422013826:/logs"
+
+    working_dir: "/apache-zookeeper-3.7.0-bin"
+
+  zookeeper-server:
+    command:
+      - "/opt/bitnami/scripts/zookeeper/run.sh"
+    container_name: "zookeeper-server"
+    entrypoint:
+      - "/opt/bitnami/scripts/zookeeper/entrypoint.sh"
+    environment:
+      - "ALLOW_ANONYMOUS_LOGIN=yes"
+      - "PATH=/opt/bitnami/common/bin:/opt/bitnami/java/bin:/opt/bitnami/zookeeper/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "HOME=/"
+      - "OS_ARCH=amd64"
+      - "OS_FLAVOUR=debian-10"
+      - "OS_NAME=linux"
+      - "BITNAMI_APP_NAME=zookeeper"
+      - "BITNAMI_IMAGE_VERSION=3.7.0-debian-10-r252"
+    expose:
+      - "2181/tcp"
+      - "2888/tcp"
+      - "3888/tcp"
+      - "8080/tcp"
+    hostname: "a035639f10a8"
+    image: "bitnami/zookeeper:latest"
+    ipc: "private"
+    labels:
+      maintainer: "Bitnami <containers@bitnami.com>"
+    logging:
+      driver: "json-file"
+      options: {}
+    networks:
+      - "app-tier"
+    user: "1001"
+
+  elasticsearch:
+
+    command:
+      - "eswrapper"
+
+    container_name: "elasticsearch"
+
+    entrypoint:
+      - "/usr/local/bin/docker-entrypoint.sh"
+
+    environment:
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms64m -Xmx512m"
+      - "PATH=/usr/share/elasticsearch/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "ELASTIC_CONTAINER=true"
+
+    hostname: "1b4eeb8cfdec"
+
+    image: "elasticsearch:7.4.2"
+
+    ipc: "private"
+
+    labels:
+      org.label-schema.build-date: "2019-10-28T20:40:44.883016Z"
+      org.label-schema.license: "Elastic-License"
+      org.label-schema.name: "Elasticsearch"
+      org.label-schema.schema-version: "1.0"
+      org.label-schema.url: "https://www.elastic.co/products/elasticsearch"
+      org.label-schema.usage: "https://www.elastic.co/guide/en/elasticsearch/reference/index.html"
+      org.label-schema.vcs-ref: "2f90bbf7b93631e52bafb59b3b049cb44ec25e96"
+      org.label-schema.vcs-url: "https://github.com/elastic/elasticsearch"
+      org.label-schema.vendor: "Elastic"
+      org.label-schema.version: "7.4.2"
+      org.opencontainers.image.created: "2019-10-28T20:40:44.883016Z"
+      org.opencontainers.image.documentation: "https://www.elastic.co/guide/en/elasticsearch/reference/index.html"
+      org.opencontainers.image.licenses: "Elastic-License"
+      org.opencontainers.image.revision: "2f90bbf7b93631e52bafb59b3b049cb44ec25e96"
+      org.opencontainers.image.source: "https://github.com/elastic/elasticsearch"
+      org.opencontainers.image.title: "Elasticsearch"
+      org.opencontainers.image.url: "https://www.elastic.co/products/elasticsearch"
+      org.opencontainers.image.vendor: "Elastic"
+      org.opencontainers.image.version: "7.4.2"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:06"
+
+    network_mode: "bridge"
+
+    ports:
+      - "9200:9200/tcp"
+      - "9300:9300/tcp"
+
+    restart: "always"
+
+    volumes:
+      - "/mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+      - "/mydata/elasticsearch/data:/usr/share/elasticsearch/data"
+      - "/mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins"
+
+    working_dir: "/usr/share/elasticsearch"
+
+  kafka:
+
+    command:
+      - "start-kafka.sh"
+
+    container_name: "kafka"
+
+    environment:
+      - "KAFKA_ZOOKEEPER_CONNECT=192.168.56.42:2181"
+      - "KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.56.42:9092"
+      - "KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092"
+      - "KAFKA_BROKER_ID=1"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/kafka/bin"
+      - "LANG=en_US.UTF-8"
+      - "LANGUAGE=en_US:en"
+      - "LC_ALL=en_US.UTF-8"
+      - "JAVA_HOME=/usr/lib/jvm/zulu8-ca"
+      - "KAFKA_VERSION=2.8.1"
+      - "SCALA_VERSION=2.13"
+      - "KAFKA_HOME=/opt/kafka"
+      - "GLIBC_VERSION=2.31-r0"
+
+    hostname: "c3c8fb1493bf"
+
+    image: "wurstmeister/kafka:latest"
+
+    ipc: "private"
+
+    labels:
+      maintainer: "wurstmeister"
+      org.label-schema.build-date: "2021-12-30T16:29:54Z"
+      org.label-schema.description: "Apache Kafka"
+      org.label-schema.name: "kafka"
+      org.label-schema.schema-version: "1.0"
+      org.label-schema.vcs-ref: "a49ac63983188c7eadebfb69c131ae74d401e586"
+      org.label-schema.vcs-url: "https://github.com/wurstmeister/kafka-docker"
+      org.label-schema.version: "2.13_2.8.1"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:05"
+
+    network_mode: "bridge"
+
+    ports:
+      - "9092:9092/tcp"
+
+    restart: "always"
+
+    tty: true
+
+    volumes:
+      - "/etc/localtime:/etc/localtime"
+      - "82e58a0e9d0931fa258a58d29d808281c84c1f51ae41e3ea6c2e35285f8dfab5:/kafka"
+
+  kibana:
+    command:
+      - "/usr/local/bin/kibana-docker"
+    container_name: "kibana"
+    entrypoint:
+      - "/usr/local/bin/dumb-init"
+      - "--"
+    environment:
+      - "ELASTICSEARCH_HOSTS=http://192.168.56.42:9200"
+      - "PATH=/usr/share/kibana/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "ELASTIC_CONTAINER=true"
+    hostname: "445756f80736"
+    image: "kibana:7.4.2"
+    ipc: "private"
+    labels:
+      license: "Elastic License"
+      org.label-schema.build-date: "20190801"
+      org.label-schema.license: "Elastic License"
+      org.label-schema.name: "kibana"
+      org.label-schema.schema-version: "1.0"
+      org.label-schema.url: "https://www.elastic.co/products/kibana"
+      org.label-schema.vcs-url: "https://github.com/elastic/kibana"
+      org.label-schema.vendor: "Elastic"
+      org.label-schema.version: "7.4.2"
+    logging:
+      driver: "json-file"
+      options: {}
+    mac_address: "02:42:ac:11:00:08"
+    network_mode: "bridge"
+    ports:
+      - "5601:5601/tcp"
+    restart: "always"
+    user: "kibana"
+    working_dir: "/usr/share/kibana"
+
+  logstash:
+    container_name: "logstash"
+    entrypoint:
+      - "/usr/local/bin/docker-entrypoint"
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "PATH=/usr/share/logstash/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "ELASTIC_CONTAINER=true"
+      - "LANG=en_US.UTF-8"
+      - "LC_ALL=en_US.UTF-8"
+    hostname: "1fc95559092a"
+    image: "logstash:7.4.2"
+    ipc: "private"
+    labels:
+      license: "Elastic License"
+      org.label-schema.build-date: "20190801"
+      org.label-schema.license: "GPLv2"
+      org.label-schema.name: "logstash"
+      org.label-schema.schema-version: "1.0"
+      org.label-schema.url: "https://www.elastic.co/products/logstash"
+      org.label-schema.vcs-url: "https://github.com/elastic/logstash"
+      org.label-schema.vendor: "Elastic"
+      org.label-schema.version: "7.4.2"
+    logging:
+      driver: "json-file"
+      options: {}
+    mac_address: "02:42:ac:11:00:09"
+    network_mode: "bridge"
+    ports:
+      - "5044:5044/tcp"
+    privileged: true
+    restart: "always"
+    security_opt:
+      - "label=disable"
+    stdin_open: true
+    tty: true
+    user: "1000"
+    volumes:
+      - "/mydata/logstash/conf/conf.d:/usr/share/logstash/config/conf.d"
+      - "/mydata/logstash/conf/logstash.yml:/usr/share/logstash/config/logstash.yml"
+    working_dir: "/usr/share/logstash"
+
+  minio:
+
+    command:
+      - "server"
+      - "/data"
+      - "--console-address"
+      - ":9090"
+
+    container_name: "minio"
+
+    entrypoint:
+      - "/usr/bin/docker-entrypoint.sh"
+
+    environment:
+      - "MINIO_ACCESS_KEY=admin"
+      - "MINIO_SECRET_KEY=kirito486"
+      - "PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "container=oci"
+      - "MINIO_ACCESS_KEY_FILE=access_key"
+      - "MINIO_SECRET_KEY_FILE=secret_key"
+      - "MINIO_ROOT_USER_FILE=access_key"
+      - "MINIO_ROOT_PASSWORD_FILE=secret_key"
+      - "MINIO_KMS_SECRET_KEY_FILE=kms_master_key"
+      - "MINIO_UPDATE_MINISIGN_PUBKEY=RWTx5Zr1tiHQLwG9keckT0c45M3AGeHD6IvimQHpyRywVWGbP1aVSGav"
+      - "MINIO_CONFIG_ENV_FILE=config.env"
+
+    hostname: "4bef56800918"
+
+    image: "minio/minio"
+
+    ipc: "private"
+
+    labels:
+      architecture: "x86_64"
+      build-date: "2021-10-26T13:03:06.167238"
+      com.redhat.build-host: "cpt-1006.osbs.prod.upshift.rdu2.redhat.com"
+      com.redhat.component: "ubi8-minimal-container"
+      com.redhat.license_terms: "https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI"
+      description: "MinIO object storage is fundamentally different. Designed for performance and the\
+        \ S3 API, it is 100% open-source. MinIO is ideal for large, private cloud environments with stringent\
+        \ security requirements and delivers mission-critical availability across a diverse range of workloads."
+      distribution-scope: "public"
+      io.k8s.description: "The Universal Base Image Minimal is a stripped down image that uses microdnf\
+        \ as a package manager. This base image is freely redistributable, but Red Hat only supports Red\
+        \ Hat technologies through subscriptions for Red Hat products. This image is maintained by Red\
+        \ Hat and updated regularly."
+      io.k8s.display-name: "Red Hat Universal Base Image 8 Minimal"
+      io.openshift.expose-services: ""
+      io.openshift.tags: "minimal rhel8"
+      maintainer: "MinIO Inc <dev@min.io>"
+      name: "MinIO"
+      release: "RELEASE.2022-01-04T07-41-07Z"
+      summary: "MinIO is a High Performance Object Storage, API compatible with Amazon S3 cloud storage\
+        \ service."
+      url: "https://access.redhat.com/containers/#/registry.access.redhat.com/ubi8-minimal/images/8.4-212"
+      vcs-ref: "7256039d3c371a38cf13906dcf5688c19700c73b"
+      vcs-type: "git"
+      vendor: "MinIO Inc <dev@min.io>"
+      version: "RELEASE.2022-01-04T07-41-07Z"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:04"
+
+    network_mode: "bridge"
+
+    ports:
+      - "9000:9000/tcp"
+      - "9090:9090/tcp"
+
+    restart: "always"
+
+    volumes:
+      - "/mydata/minio/config:/root/.minio"
+      - "/mydata/minio/data:/data"
+
+  mysql:
+    command:
+      - "mysqld"
+    container_name: "mysql"
+    entrypoint:
+      - "docker-entrypoint.sh"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "GOSU_VERSION=1.12"
+      - "MYSQL_MAJOR=5.7"
+      - "MYSQL_VERSION=5.7.36-1debian10"
+    hostname: "8a2ecd1c25f5"
+    image: "mysql:5.7"
+    ipc: "private"
+    logging:
+      driver: "json-file"
+      options: {}
+    mac_address: "02:42:ac:11:00:0a"
+    network_mode: "bridge"
+    ports:
+      - "3306:3306/tcp"
+    restart: "always"
+    volumes:
+      - "/mydata/mysql/conf:/etc/mysql"
+      - "/mydata/mysql/data:/var/lib/mysql"
+      - "/mydata/mysql/log:/var/log/mysql"
+
+  nacos:
+
+    container_name: "nacos"
+
+    entrypoint:
+      - "bin/docker-startup.sh"
+
+    environment:
+      - "JVM_XMS=256m"
+      - "JVM_XMX=256m"
+      - "MODE=standalone"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "PREFER_HOST_MODE=ip"
+      - "BASE_DIR=/home/nacos"
+      - "CLASSPATH=.:/home/nacos/conf:"
+      - "CLUSTER_CONF=/home/nacos/conf/cluster.conf"
+      - "FUNCTION_MODE=all"
+      - "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk"
+      - "NACOS_USER=nacos"
+      - "JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java"
+      - "JVM_XMN=512m"
+      - "JVM_MS=128m"
+      - "JVM_MMS=320m"
+      - "NACOS_DEBUG=n"
+      - "TOMCAT_ACCESSLOG_ENABLED=false"
+      - "TIME_ZONE=Asia/Shanghai"
+
+    hostname: "6367b5de58cb"
+
+    image: "nacos/nacos-server"
+
+    ipc: "private"
+
+    labels:
+      org.label-schema.schema-version: "= 1.0     org.label-schema.name=CentOS Base Image     org.label-schema.vendor=CentOS\
+        \     org.label-schema.license=GPLv2     org.label-schema.build-date=20180531"
+      org.opencontainers.image.created: "2021-07-31T10:05:17.868Z"
+      org.opencontainers.image.description: "This project contains a Docker image meant to facilitate\
+        \ the deployment of Nacos ."
+      org.opencontainers.image.licenses: ""
+      org.opencontainers.image.revision: "3ecf3cd381938b61cbb4d565dd7f1cc2320ea5ee"
+      org.opencontainers.image.source: "https://github.com/nacos-group/nacos-docker"
+      org.opencontainers.image.title: "nacos-docker"
+      org.opencontainers.image.url: "https://github.com/nacos-group/nacos-docker"
+      org.opencontainers.image.version: "v2.0.3"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:0b"
+
+    network_mode: "bridge"
+
+    ports:
+      - "8848:8848/tcp"
+      - "9848:9848/tcp"
+      - "9849:9849/tcp"
+
+    privileged: true
+
+    restart: "always"
+
+    security_opt:
+      - "label=disable"
+
+    volumes:
+      - "/mydata/nacos/conf:/home/nacos/conf"
+      - "/mydata/nacos/logs:/home/nacos/logs"
+
+    working_dir: "/home/nacos"
+
+  nginx:
+    command:
+      - "nginx"
+      - "-g"
+      - "daemon off;"
+    container_name: "nginx"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "NGINX_VERSION=1.10.3-1~jessie"
+    hostname: "db3d1af5f56f"
+    image: "nginx:1.10"
+    ipc: "private"
+    logging:
+      driver: "json-file"
+      options: {}
+    mac_address: "02:42:ac:11:00:03"
+    network_mode: "bridge"
+    ports:
+      - "80:80/tcp"
+    restart: "always"
+    volumes:
+      - "/mydata/nginx/conf:/etc/nginx"
+      - "/mydata/nginx/html:/usr/share/nginx/html"
+      - "/mydata/nginx/logs:/var/log/nginx"
+
+  rabbitmq:
+
+    command:
+      - "rabbitmq-server"
+
+    container_name: "rabbitmq"
+
+    entrypoint:
+      - "docker-entrypoint.sh"
+
+    environment:
+      - "PATH=/opt/rabbitmq/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "OPENSSL_VERSION=1.1.1m"
+      - "OPENSSL_SOURCE_SHA256=f89199be8b23ca45fc7cb9f1d8d3ee67312318286ad030f5316aca6462db6c96"
+      - "OPENSSL_PGP_KEY_IDS=0x8657ABB260F056B1E5190839D9C4D26D0E604491 0x5B2545DAB21995F4088CEFAA36CEE4DEB00CFE33\
+        \ 0xED230BEC4D4F2518B9D7DF41F0DB4D21C1D35231 0xC1F33DD8CE1D4CC613AF14DA9195C48241FBF7DD 0x7953AC1FBC3DC8B3B292393ED5E9E43F7DF9EE8C\
+        \ 0xE5E52560DD91C556DDBDA5D02064C53641C25E5D"
+      - "OTP_VERSION=24.2"
+      - "OTP_SOURCE_SHA256=af0f1928dcd16cd5746feeca8325811865578bf1a110a443d353ea3e509e6d41"
+      - "RABBITMQ_DATA_DIR=/var/lib/rabbitmq"
+      - "RABBITMQ_VERSION=3.9.11"
+      - "RABBITMQ_PGP_KEY_ID=0x0A9AF2115F4687BD29803A206B73A36E6026DFCA"
+      - "RABBITMQ_HOME=/opt/rabbitmq"
+      - "RABBITMQ_LOGS=-"
+      - "HOME=/var/lib/rabbitmq"
+      - "LANG=C.UTF-8"
+      - "LANGUAGE=C.UTF-8"
+      - "LC_ALL=C.UTF-8"
+
+    hostname: "de0ce3553054"
+
+    image: "rabbitmq:management"
+
+    ipc: "private"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:07"
+
+    network_mode: "bridge"
+
+    ports:
+      - "15671:15671/tcp"
+      - "15672:15672/tcp"
+      - "25672:25672/tcp"
+      - "4369:4369/tcp"
+      - "5671:5671/tcp"
+      - "5672:5672/tcp"
+
+    restart: "always"
+
+    volumes:
+      - "38482e7852cfe41389b2a3119b71f4da62ddb57e0aa9d35191cb5c7985cd5fe4:/var/lib/rabbitmq"
+
+  redis:
+    command:
+      - "redis-server"
+      - "--loadmodule"
+      - "/usr/lib/redis/modules/redisbloom.so"
+    container_name: "redis"
+    entrypoint:
+      - "docker-entrypoint.sh"
+    environment:
+      - "TZ=Asia/Shanghai"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "GOSU_VERSION=1.11"
+      - "REDIS_VERSION=5.0.8"
+      - "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-5.0.8.tar.gz"
+      - "REDIS_DOWNLOAD_SHA=f3c7eac42f433326a8d981b50dba0169fdfaf46abb23fcda2f933a7552ee4ed7"
+      - "LIBDIR=/usr/lib/redis/modules"
+    hostname: "41b77f5cdd27"
+    image: "redislabs/rebloom:2.2.2"
+    ipc: "private"
+    logging:
+      driver: "json-file"
+      options: {}
+    mac_address: "02:42:ac:11:00:02"
+    network_mode: "bridge"
+    ports:
+      - "6379:6379/tcp"
+    restart: "always"
+    volumes:
+      - "/mydata/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "/mydata/redis/data:/var/lib/redis"
+      - "/mydata/redis/log:/var/log/redis"
+      - "061b1004cdacc8dd82ca580c93569bcb1fbf2f7f8d73fd0765684c51a2b67fe4:/data"
+    working_dir: "/data"
+
+
+version: "3.6"
+
+volumes:
+  061b1004cdacc8dd82ca580c93569bcb1fbf2f7f8d73fd0765684c51a2b67fe4:
+    external: true
+  12dcb9b527e782a9a159a821f98dc51443839fd6904bfbee19bfb43422013826:
+    external: true
+  38482e7852cfe41389b2a3119b71f4da62ddb57e0aa9d35191cb5c7985cd5fe4:
+    external: true
+  82e58a0e9d0931fa258a58d29d808281c84c1f51ae41e3ea6c2e35285f8dfab5:
+    external: true
